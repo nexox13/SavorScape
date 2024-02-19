@@ -25,7 +25,7 @@ services:
     ports:
       - 8081:8081
     restart: always
-  recipeApi:
+  recipeapi:
     build: ./recipeApi
     container_name: recipeapi
     depends_on:
@@ -34,9 +34,9 @@ services:
       <<: *common-variables
       MONGO_HOST: mongodb
     ports:
-      - 8000:8000
+      - 8083:8083
     volumes:
-      - ./recipeApi:/app
+      - ./recipeapi:/app
     command: npm start
   client:
     build: ./client
@@ -49,6 +49,6 @@ services:
     volumes:
       - ./client/src:/app/src
     links:
-      - recipeApi
+      - recipeapi
     command: npm start
 
