@@ -1,0 +1,54 @@
+version: "3.4"
+x-common-variables: &common-variables
+  MONGO_INITDB_ROOT_USERNAME: root
+  MONGO_INITDB_ROOT_PASSWORD: example
+  MONGO_INITDB_DATABASE: sampledb
+  REACT_APP_SERVER_PORT: 8000
+services:
+  mongodb:
+    image: mongo
+    container_name: mongo_container
+    environment:
+      <<: *common-variables
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+  mongo-express:
+    depends_on:
+      - mongodb
+    image: mongo-express
+    container_name: mongo_express_container
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    ports:
+      - 8081:8081
+    restart: always
+  recipeApi:
+    build: ./recipeApi
+    container_name: recipeapi
+    depends_on:
+      - mongodb
+    environment:
+      <<: *common-variables
+      MONGO_HOST: mongodb
+    ports:
+      - 8000:8000
+    volumes:
+      - ./recipeApi:/app
+    command: npm start
+  client:
+    build: ./client
+    container_name: client_container
+    environment:
+      <<: *common-variables
+      NODE_PATH: src
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/src:/app/src
+    links:
+      - recipeApi
+    command: npm start
+
