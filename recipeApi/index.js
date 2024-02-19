@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
 const Port = 8082;
  
@@ -6,7 +8,7 @@ app.use(express.json());
  
 app.listen(
     Port,
-    () => console.log(`It's alive on https://10.115.1.14:${Port}`)
+    () => console.log(`It's alive on http://10.115.1.14:${Port}`)
 )
  
 app.get('/recipe', (req, res) => {
