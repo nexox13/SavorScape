@@ -11,26 +11,11 @@ app.listen(
     () => console.log(`It's alive on http://10.115.1.14:${Port}`)
 )
  
-app.get('/recipe', (req, res) => {
-    res.status(200).send({
-        dish: 'Pizza Magaritha',
-        country: 'Italy'
-    })
-});
- 
-app.post('/recipe/:id', (req, res) => {
-    const { id } = req.params;
-    const { name } = req.body;
- 
-    if (!name) {
-        return res.status(418).send({ message: 'We need a logo' });
-    }
- 
-    if (res.headersSent) {
-        console.error('Headers already sent');
-    } else {
-        res.send({
-            dish: `with your ${name} and ID of ${id}`,
-        });
-    }
-});
+// Add a new document to the collection
+app.post("/", async (req, res) => {
+    let collection = await db.collection("posts");
+    let newDocument = req.body;
+    newDocument.date = new Date();
+    let result = await collection.insertOne(newDocument);
+    res.send(result).status(204);
+  });
