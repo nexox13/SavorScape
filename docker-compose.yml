@@ -37,7 +37,7 @@ services:
       - 8083:8083
     volumes:
       - ./recipeApi:/app
-    command: npm start
+    command: node .
   client:
     build: ./client
     container_name: client_container
@@ -50,5 +50,5 @@ services:
       - ./client/src:/app/src
     links:
       - recipeapi
-    command: npm start
+    command: npm run dev
 
