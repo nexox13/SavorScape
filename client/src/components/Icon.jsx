@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function Icon({ src, alt, link }) {
+function Icon({ children, label, link }) {
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer">
-      <img src={src} alt={alt} className="w-6 h-6 hover:text-blue-500" />
+    <a href={link} target="_blank" rel="noopener noreferrer" aria-label={label}>
+      {children}
     </a>
-  )
+  );
 }
 
-export default Icon
+export default Icon;
