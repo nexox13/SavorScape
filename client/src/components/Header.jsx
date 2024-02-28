@@ -1,15 +1,41 @@
 import React from 'react';
 import Icon from './Icon';
 import Search from './Search';
+import { useAppContext } from '../contexts/AppContext';
 
-function Header() {
+function Header({ }) {
+
+  const { showImpressum, setShowImpressum,setShowAddRecipe,setShowSettings} = useAppContext();
+
+
+  const toggleInfoBox = (infoBoxType) => {
+    switch (infoBoxType) {
+      case 'impressum':
+        setShowImpressum(true);
+        setShowAddRecipe(false);
+        setShowSettings(false);
+        break;
+      case 'addRecipe':
+        setShowImpressum(false);
+        setShowAddRecipe(true);
+        setShowSettings(false);
+        break;
+      case 'settings':
+        setShowImpressum(false);
+        setShowAddRecipe(false);
+        setShowSettings(true);
+        break;
+      default:
+        break;
+    }
+  };
   return (
-    <div className="sticky top-0 h-20 flex justify-evenly items-center bg-gray-300 opacity-80">
+    <div className="sticky top-0 h-20 flex justify-evenly items-center bg-gray-300 opacity-75">
 
         {/* GitHub */}
-        <Icon link="http://localhost:8080" label="GitHub">
+        <Icon link="https://github.com/nexox13/SavorScape" label="GitHub">
           <svg
-            stroke="currentColor"
+            stroke="currentColor"  
             fill="currentColor"
             strokeWidth="0"
             viewBox="0 0 1024 1024"
@@ -22,32 +48,27 @@ function Header() {
         </Icon>
 
         {/* Impressum */}
-        <Icon link="http://localhost:8080" label="GitHub">
+        <Icon label="Impressum" onClick={() => toggleInfoBox('impressum')}>
         <svg
           stroke="currentColor"
           fill="currentColor"
-          strokeWidth="0"
-          viewBox="0 0 16 16"
-          height="2.5em"
-          width="2.5em"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          height="2.6em"
+          width="2.6em"
           xmlns="http://www.w3.org/2000/svg"
         >
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z"
-        ></path>
-        <path
-          d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"
-        ></path>
-          <circle cx="8" cy="4.5" r="1"></circle>
+          <g>
+            <path fill="none" d="M0 0h24v24H0z"></path>
+            <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"></path>
+          </g>
         </svg>
         </Icon>
         
         <Search/>
 
         {/* AddNewRecipe */}
-        <Icon link="http://localhost:8080" label="GitHub">
+        <Icon label="AddNewRecipe" onClick={() => toggleInfoBox('addRecipe')}>
         <svg
           stroke="currentColor"
           fill="currentColor"
@@ -64,7 +85,7 @@ function Header() {
         </Icon>
         
         {/* Settings */}
-        <Icon link="http://localhost:8080" label="GitHub">
+        <Icon label="Settings" onClick={() => toggleInfoBox('settings')}>
         <svg
             stroke="currentColor"
             fill="none"
@@ -79,7 +100,6 @@ function Header() {
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
         </svg>
-
         </Icon>
     </div>
   );

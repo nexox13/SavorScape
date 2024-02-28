@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Icon({ children, label, link }) {
+function Icon({ link, label, onClick, children }) {
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer" aria-label={label}>
+    <a href={link} className="icon" onClick={onClick}>
       {children}
+      {/* <span className="label">{label}</span> */}
     </a>
   );
 }
