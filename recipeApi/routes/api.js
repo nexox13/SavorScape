@@ -19,6 +19,7 @@ router.get('/recipes', async (req, res) => {
 // POST: Neues Rezept hinzufügen
 router.post('/recipes', async (req, res) => {
   const recipe = new Recipe({
+    country: req.body.country,
     title: req.body.title,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
