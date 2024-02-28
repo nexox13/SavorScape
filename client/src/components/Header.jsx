@@ -5,7 +5,7 @@ import { useAppContext } from '../contexts/AppContext';
 
 function Header({ }) {
 
-  const { showImpressum, setShowImpressum,setShowAddRecipe,setShowSettings} = useAppContext();
+  const { showImpressum, setShowImpressum, showAddRecipe ,setShowAddRecipe, showSettings ,setShowSettings} = useAppContext();
 
 
   const toggleInfoBox = (infoBoxType) => {
@@ -14,16 +14,25 @@ function Header({ }) {
         setShowImpressum(true);
         setShowAddRecipe(false);
         setShowSettings(false);
+        if (showImpressum == true) {
+          setShowImpressum(false);
+        }
         break;
       case 'addRecipe':
         setShowImpressum(false);
         setShowAddRecipe(true);
         setShowSettings(false);
+        if (showAddRecipe == true) {
+          setShowAddRecipe(false);
+        }
         break;
       case 'settings':
         setShowImpressum(false);
         setShowAddRecipe(false);
         setShowSettings(true);
+        if (showSettings == true) {
+          setShowSettings(false);
+        }
         break;
       default:
         break;

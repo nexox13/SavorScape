@@ -7,4 +7,18 @@
     justify-content: center; 
     align-items: center;
     padding: 10px;
-  }
+}
+.custom-info-box {
+  position: fixed;
+  margin-top: 0.8rem;
+  margin-right: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem; 
+  right: 0;
+  height: 83%;
+  width: 25%;
+  background-color: #aeb0b3;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  opacity: 0.65;
+}

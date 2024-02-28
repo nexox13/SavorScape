@@ -9,6 +9,8 @@ function MainContent() {
   return (
     <div>
 
+    {/* Map-Impletation */}
+
       {showImpressum && <InfoBox type="impressum" />}
       {showAddRecipe && <InfoBox type="addRecipe" />}
       {showSettings && <InfoBox type="settings" />}
