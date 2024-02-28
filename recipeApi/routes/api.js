@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Recipe = require('../model/recipe');
-const Connect = require ('../db')
+const { loadDb } = require('../db');
+const DB = loadDb();
 
-Connect.
+
+loadDb();
 // GET: Alle Rezepte abrufen
 router.get('/recipes', async (req, res) => {
   try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find({})
     res.json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });

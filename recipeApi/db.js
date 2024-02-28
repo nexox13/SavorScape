@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('root:example@mongo_container:27017/savorscape', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+function loadDb(){
+  mongoose.connect('mongodb://root:example@10.115.1.14:27017', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(() => {
+    console.log("Connected to MongoDB");
+  }).catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
+}
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+module.exports = { loadDb };
