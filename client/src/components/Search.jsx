@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import '../index.css';
+
 function Search() {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [searchedRecipe, setSearchedRecipe] = useState('');
@@ -30,20 +32,23 @@ function Search() {
   ];
 
   return (
-    <div className="p-0 bg-white rounded-2xl opacity-65">
+    <div className="p-0.5 h-14 bg-white rounded-2xl opacity-65">
       <form onSubmit={handleSubmit} className='form-container'>
-        <select
-          value={selectedCountry}
-          onChange={handleSelectCountry}
-          className="ml-1 mr-1 h-10 rounded-2xl"
-        >
-          <option value="">Select country</option>
-          {countries.map((country) => (
-            <option key={country.value} value={country.value}>
-              {country.flag} {country.label}
-            </option>
-          ))}
-        </select>
+      <select
+        value={selectedCountry}
+        onChange={handleSelectCountry}
+        className="rounded-2xl bg-white hover:cursor-pointer text-center"
+        style={{ textAlignLast: 'center' }} 
+      >
+        <option value="" disabled>Select country</option>
+        {countries.map((country) => (
+          <option key={country.label} value={country.label} className="hover:cursor-pointer bg-white text-center">
+            {country.flag} {country.value}
+          </option>
+        ))}
+      </select>
+
+
         <input
           placeholder="Recipe-Name"
           type="text"

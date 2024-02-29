@@ -9,7 +9,8 @@ function MainContent() {
   return (
     <div>
 
-    {/* Map-Impletation */}
+    {/* Map-Implementation */}
+    {/* https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/ */}
 
       {showImpressum && <InfoBox type="impressum" />}
       {showAddRecipe && <InfoBox type="addRecipe" />}
