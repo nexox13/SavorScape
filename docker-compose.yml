@@ -34,10 +34,10 @@ services:
       <<: *common-variables
       MONGO_HOST: mongodb
     ports:
-      - 8083:8083
+      - 3000:3000
     volumes:
       - ./recipeApi:/app
-    command: node .
+    command: npm start
   client:
     build: ./client
     container_name: client_container
@@ -45,10 +45,10 @@ services:
       <<: *common-variables
       NODE_PATH: src
     ports:
-      - 3000:3000
+      - 5173:5173
     volumes:
       - ./client/src:/app/src
     links:
       - recipeapi
-    command: npm run dev
+    command: npm start
 

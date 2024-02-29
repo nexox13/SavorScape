@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 function loadDb(){
-  mongoose.connect('mongodb://root:example@10.115.1.14:27017', {
+  mongoose.connect('mongodb://root:example@mongo_container:27017', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).then(() => {
