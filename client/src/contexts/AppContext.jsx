@@ -12,6 +12,8 @@ export const AppContextProvider = ({
     const [showImpressum, setShowImpressum] = useState(false);
     const [showAddRecipe, setShowAddRecipe] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const [showNotepad, setShowNotepad] = useState(false);
+    const [showDummy, setShowDummy] = useState(false);
 
 
     return ( 
@@ -22,7 +24,11 @@ export const AppContextProvider = ({
                 showAddRecipe,
                 setShowAddRecipe,
                 showSettings,
-                setShowSettings
+                setShowSettings,
+                showNotepad,
+                setShowNotepad,
+                showDummy,
+                setShowDummy
             }
         } >
         {

@@ -3,11 +3,11 @@ import InfoBox from './InfoBox';
 import { useAppContext } from '../contexts/AppContext';
 function MainContent() {
 
-  const { showImpressum, showAddRecipe, showSettings} = useAppContext();
+  const { showImpressum, showAddRecipe, showSettings, showNotepad} = useAppContext();
 
 
-  return (
-    <div>
+  return ( 
+    <>
 
     {/* Map-Implementation */}
     {/* https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/ */}
@@ -15,8 +15,9 @@ function MainContent() {
       {showImpressum && <InfoBox type="impressum" />}
       {showAddRecipe && <InfoBox type="addRecipe" />}
       {showSettings && <InfoBox type="settings" />}
+      {showNotepad && <InfoBox type="notepad" />}
 
-    </div>
+    </>
   );
 }
 
