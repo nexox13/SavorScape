@@ -22,7 +22,6 @@ function Header({ }) {
     switch (infoBoxType) {
       case 'notepad':
         setShowNotepad(true);
-        console.log(showNotepad);
         setShowImpressum(false);
         setShowAddRecipe(false);
         setShowSettings(false);
@@ -33,7 +32,6 @@ function Header({ }) {
       case 'impressum':
         setShowNotepad(false);
         setShowImpressum(true);
-        console.log(showImpressum);
         setShowAddRecipe(false);
         setShowSettings(false);
         if (showImpressum == true) {

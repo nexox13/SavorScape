@@ -13,8 +13,6 @@ export const AppContextProvider = ({
     const [showAddRecipe, setShowAddRecipe] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [showNotepad, setShowNotepad] = useState(false);
-    const [showDummy, setShowDummy] = useState(false);
-
 
     return ( 
     <AppContext.Provider value = {
@@ -26,9 +24,7 @@ export const AppContextProvider = ({
                 showSettings,
                 setShowSettings,
                 showNotepad,
-                setShowNotepad,
-                showDummy,
-                setShowDummy
+                setShowNotepad
             }
         } >
         {
