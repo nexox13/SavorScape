@@ -62,7 +62,7 @@ function Header({ }) {
   };
   return (
     <div className="sticky top-0 h-20 flex justify-evenly items-center bg-gray-300 opacity-75">
-
+        
         {/* Notepad */}
         <Icon label="Notepad" onClick={() => toggleInfoBox('notepad')}>
         <svg

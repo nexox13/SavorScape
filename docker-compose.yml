@@ -7,24 +7,12 @@ x-common-variables: &common-variables
 services:
   mongodb:
     image: mongo
-    container_name: mongo_container
+    container_name: mongodb
     environment:
       <<: *common-variables
     ports:
       - 27017:27017
     restart: unless-stopped
-  mongo-express:
-    depends_on:
-      - mongodb
-    image: mongo-express
-    container_name: mongo_express_container
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-    ports:
-      - 8081:8081
-    restart: always
   recipeapi:
     build: ./recipeApi
     container_name: recipeapi
@@ -40,12 +28,12 @@ services:
     command: npm start
   client:
     build: ./client
-    container_name: client_container
+    container_name: client
     environment:
       <<: *common-variables
       NODE_PATH: src
     ports:
-      - 5173:5173
+      - 8080:8080
     volumes:
       - ./client/src:/app/src
     links:
