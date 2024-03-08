@@ -22,7 +22,7 @@ services:
       <<: *common-variables
       MONGO_HOST: mongodb
     ports:
-      - 3000:3000
+      - 3001:3001
     volumes:
       - ./recipeApi:/app
     command: npm start
@@ -33,7 +33,7 @@ services:
       <<: *common-variables
       NODE_PATH: src
     ports:
-      - 8080:8080
+      - 8080:3000
     volumes:
       - ./client/src:/app/src
     links:
