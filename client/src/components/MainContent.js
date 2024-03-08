@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InfoBox from './InfoBox';
 import { useAppContext } from '../contexts/AppContext';
+import MapRenderer from './Map/MapRenderer';
 function MainContent() {
 
   const { showImpressum, showAddRecipe, showSettings, showNotepad} = useAppContext();
@@ -8,7 +9,7 @@ function MainContent() {
 
   return ( 
     <>
-
+      <MapRenderer></MapRenderer>
     {/* Map-Implementation */}
     {/* https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/ */}
 
