@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
 import Notepad from './Notepad';
 import Icon from './Icon';
@@ -37,7 +37,7 @@ function InfoBox() {
   }
 
   return (
-    <div className="custom-info-box">
+    <div className="custom-info-box z-50">
        <Icon label="Close" onClick={()=> toggleClose()} className="place-content-end">
         <svg 
           stroke="currentColor" 

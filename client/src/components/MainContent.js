@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import InfoBox from './InfoBox';
 import { useAppContext } from '../contexts/AppContext';
 import MapRenderer from './Map/MapRenderer';
@@ -9,16 +9,16 @@ function MainContent() {
 
   return ( 
     <>
-      <MapRenderer></MapRenderer>
-    {/* Map-Implementation */}
-    {/* https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/ */}
+      <div className="relative h-full">
+               
+        {showImpressum && <InfoBox type="impressum" className="z-50" />} 
+        {showAddRecipe && <InfoBox type="addRecipe" className="z-50" />} 
+        {showSettings && <InfoBox type="settings" className="z-50" />} 
+        {showNotepad && <InfoBox type="notepad" className="z-50" />} 
 
-      {showImpressum && <InfoBox type="impressum" />}
-      {showAddRecipe && <InfoBox type="addRecipe" />}
-      {showSettings && <InfoBox type="settings" />}
-      {showNotepad && <InfoBox type="notepad" />}
-
-    </>
+        <MapRenderer/>
+      </div>
+  </>
   );
 }
 

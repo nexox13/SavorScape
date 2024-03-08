@@ -13,8 +13,6 @@ function Header({ }) {
           setShowSettings, 
           showNotepad, 
           setShowNotepad,
-          showDummy, 
-          setShowDummy, 
         } = useAppContext();
 
 
@@ -25,7 +23,7 @@ function Header({ }) {
         setShowImpressum(false);
         setShowAddRecipe(false);
         setShowSettings(false);
-        if (showNotepad == true) {
+        if (showNotepad === true) {
           setShowNotepad(false);
         }
         break;
@@ -34,7 +32,7 @@ function Header({ }) {
         setShowImpressum(true);
         setShowAddRecipe(false);
         setShowSettings(false);
-        if (showImpressum == true) {
+        if (showImpressum === true) {
           setShowImpressum(false);
         }
         break;
@@ -43,7 +41,7 @@ function Header({ }) {
         setShowImpressum(false);
         setShowAddRecipe(true);
         setShowSettings(false);
-        if (showAddRecipe == true) {
+        if (showAddRecipe === true) {
           setShowAddRecipe(false);
         }
         break;
@@ -52,7 +50,7 @@ function Header({ }) {
         setShowImpressum(false);
         setShowAddRecipe(false);
         setShowSettings(true);
-        if (showSettings == true) {
+        if (showSettings === true) {
           setShowSettings(false);
         }
         break;
