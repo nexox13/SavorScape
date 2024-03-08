@@ -23,7 +23,7 @@ function Notepad() {
     <div className="bg-gray-100 p-4 rounded-xl shadow-md">
       <h2 className="text-xl font-bold mb-4 justify-center">Notepad</h2>
       <textarea
-        className="w-full h-96 min-h-10 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+        className="w-full h-96 min-h-10 max-h-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
         value={content}
         onChange={handleChange}
         placeholder="Write your notes here..."
