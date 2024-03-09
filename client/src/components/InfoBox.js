@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
 import Notepad from './Notepad';
+import Impressum from './Impressum';
 import Icon from './Icon';
 
 import '../index.css';
@@ -29,7 +30,7 @@ function InfoBox() {
   if (showNotepad) {
     content = <Notepad />;
   } else if (showImpressum) {
-    content = <div>Impressum content goes here</div>;
+    content = <Impressum/>;
   } else if (showAddRecipe) {
     content = <div>Add Recipe content goes here</div>;
   } else if (showSettings) {
