@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Icon({ link, label, onClick, children }) {
+function Icon({ link, onClick, children }) {
   return (
     <a href={link} className="icon" onClick={onClick}>
       {children}

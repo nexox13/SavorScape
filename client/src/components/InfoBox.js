@@ -37,7 +37,7 @@ function InfoBox() {
   }
 
   return (
-    <div className="custom-info-box z-50">
+    <div className="custom-info-box z-0">
        <Icon label="Close" onClick={()=> toggleClose()} className="place-content-end">
         <svg 
           stroke="currentColor" 

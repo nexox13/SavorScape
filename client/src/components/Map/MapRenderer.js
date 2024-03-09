@@ -31,9 +31,10 @@ function MapRenderer() {
     const initializeMap = () => {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
-            style: 'mapbox://styles/mapbox/streets-v12',
+            style: 'mapbox://styles/mapbox/dark-v11',
             center: [lng, lat],
-            zoom: zoom
+            zoom: zoom,
+            attributionControl: false // This will disable Mapbox's default attribution control
         });
 
         map.current.on('move', () => {
@@ -58,19 +59,17 @@ function MapRenderer() {
         }
     };
 
-
     return (
-      <div>
-        <div className="p-2 w-auto fixed bottom-2 left-2 z-50 bg-white rounded-xl" style={{ opacity: 0.65 }}>
-            <span style={{ opacity: 1, fontWeight: 'bold' }}>
-                Longitude: {lng} ~ Latitude: {lat} ~ Zoom: {zoom}
-            </span>
+        <div>
+            <div className="p-2 w-auto fixed bottom-2 left-2 z-50 bg-white rounded-xl" style={{ opacity: 0.65 }}>
+                <span style={{ opacity: 1, fontWeight: 'bold' }}>
+                    Longitude: {lng} ~ Latitude: {lat} ~ Zoom: {zoom}
+                </span>
+            </div>
+            <div ref={mapContainer} className="h-screen" style={{ zIndex: 1 }} />
         </div>
-        <div ref={mapContainer} className="min-h-screen" />
-
-      </div>
-  
     );
 }
 
 export default MapRenderer;
+
