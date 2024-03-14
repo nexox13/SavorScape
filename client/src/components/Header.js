@@ -3,7 +3,7 @@ import Icon from './Icon';
 import Search from './Search';
 import { useAppContext } from '../contexts/AppContext';
 
-function Header({ }) {
+function Header() {
 
   const { showImpressum, 
           setShowImpressum, 
