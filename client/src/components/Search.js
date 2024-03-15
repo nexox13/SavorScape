@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { useAppContext } from '../contexts/AppContext';
 
 import '../index.css';
 
 function Search() {
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [searchedRecipe, setSearchedRecipe] = useState('');
+  const { selectedCountry, setSelectedCountry, searchedRecipe, setSearchedRecipe } = useAppContext();
 
   const handleSelectCountry = (event) => {
     setSelectedCountry(event.target.value);

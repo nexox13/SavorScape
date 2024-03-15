@@ -6,6 +6,7 @@ import { useAppContext } from '../contexts/AppContext';
 function MainContent() {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
+  
   const { showImpressum, showAddRecipe, showSettings, showNotepad } = useAppContext();
 
   const handleMouseEnter = () => {
