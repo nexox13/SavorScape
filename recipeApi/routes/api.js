@@ -21,6 +21,8 @@ router.post('/recipes', async (req, res) => {
   const recipe = new Recipe({
     country: req.body.country,
     title: req.body.title,
+    preparationtime: req.body.preparationtime,
+    difficulty: req.body.difficulty,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   });
