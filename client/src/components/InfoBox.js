@@ -5,6 +5,7 @@ import Impressum from './Impressum';
 import Icon from './Icon';
 
 import '../index.css';
+import AddRecipe from './AddRecipe';
 
 function InfoBox() {
   const { 
@@ -30,9 +31,9 @@ function InfoBox() {
   if (showNotepad) {
     content = <Notepad />;
   } else if (showImpressum) {
-    content = <Impressum/>;
+    content = <Impressum />;
   } else if (showAddRecipe) {
-    content = <div>Add Recipe content goes here</div>;
+    content = <AddRecipe />;
   } else if (showSettings) {
     content = <div>Settings content goes here</div>;
   }

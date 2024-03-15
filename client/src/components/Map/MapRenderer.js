@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 function MapRenderer() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoibXRoc3F1ZXp6IiwiYSI6ImNsdDR0M3VuajA2YmYyam1uZ3lkcm03dnEifQ.K9GepRMOKNZFk2e8zkXTzw';
+    mapboxgl.accessToken = 'pk.eyJ1IjoibXRoc3F1ZXp6IiwiYSI6ImNsdHNpdW1jYzB0bHcya3BjbjMwdGdsOWgifQ.c4VO_Axkkly245AJFz7NmA';
     
     const mapContainer = useRef(null);
     const map = useRef(null);
