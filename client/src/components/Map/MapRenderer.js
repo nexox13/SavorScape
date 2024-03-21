@@ -6,9 +6,10 @@ function MapRenderer() {
     
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(9.875);
-    const [lat, setLat] = useState(47.40);
+    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState(null);
     const [zoom, setZoom] = useState(10);
+    const [locationChecked, setLocationChecked] = useState(false);
 
     const initializeMap = useCallback(() => {
         map.current = new mapboxgl.Map({
@@ -51,19 +52,32 @@ function MapRenderer() {
             map.current.on('webglcontextrestored', handleContextRestored);
         }
 
+        // Check location only once on component mount
+        if (!locationChecked && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setLng(position.coords.longitude);
+                setLat(position.coords.latitude);
+                setLocationChecked(true);
+            }, (error) => {
+                console.error('Error getting geolocation:', error);
+            });
+        } else if (!navigator.geolocation) {
+            console.error('Geolocation is not supported by this browser.');
+        }
+
         return () => {
             if (map.current) {
                 map.current.off('webglcontextlost', handleContextLost);
                 map.current.off('webglcontextrestored', handleContextRestored);
             }
         };
-    }, [map, lat, lng, zoom, handleContextLost, handleContextRestored, initializeMap]);
+    }, [map, lat, lng, zoom, handleContextLost, handleContextRestored, initializeMap, locationChecked]);
 
     return (
         <div>
             <div className="p-2 w-auto fixed bottom-2 left-2 z-50 bg-white rounded-xl" style={{ opacity: 0.65 }}>
                 <span style={{ opacity: 1, fontWeight: 'bold' }}>
-                    Longitude: {lng} ~ Latitude: {lat} ~ Zoom: {zoom}
+                    Longitude: {lng !== null ? lng : 'Loading...'} ~ Latitude: {lat !== null ? lat : 'Loading...'} ~ Zoom: {zoom}
                 </span>
             </div>
             <div ref={mapContainer} className="h-screen" style={{ zIndex: 1 }} />
