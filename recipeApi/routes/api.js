@@ -20,11 +20,11 @@ router.get('/recipes', async (req, res) => {
 router.post('/recipes', async (req, res) => {
   const recipe = new Recipe({
     country: req.body.country,
-    title: req.body.title,
-    image: req.body.image,
-    preparationtime: req.body.preparationtime,
+    name: req.body.name,
+    // image: req.body.image,
+    // preparationtime: req.body.preparationtime,
     difficulty: req.body.difficulty,
-    ingredients: req.body.ingredients,
+    // ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   });
 
