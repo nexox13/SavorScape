@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import '../index.css'
-
-const getRecipes = async() => {
-  const url = `http://10.115.1.14:3001/api/recipes`
-  
-  const response = await fetch(url)
-  const responseJson = await response.json()
-  console.log(responseJson)
-};
-
-getRecipes()
+import React, { useState } from 'react';
+import { FaStar } from 'react-icons/fa';
 
 function AddRecipe() {
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [difficulty, setDifficulty] = useState(0); // Initial difficulty set to 0
+
+  const handleStarClick = (rating) => {
+    setDifficulty(rating);
+  };
 
   const handleChange = (type, value) => {
     switch (type) {
@@ -37,7 +32,7 @@ function AddRecipe() {
   };
 
   return (
-    <span style={{ opacity: 1, backgroundColor:'white', fontWeight: 'bold' }}>
+    <span style={{ opacity: 1, backgroundColor: 'white', fontWeight: 'bold' }}>
       <div className="overflow-auto bg-gray-100 p-4 rounded-xl shadow-md h-auto">
         <h2 className="text-xl font-bold mb-4 justify-center">Add a Recipe</h2>
         <input
@@ -52,6 +47,18 @@ function AddRecipe() {
           onChange={(e) => handleChange('country', e.target.value)}
           placeholder="Recipe country"
         />
+        <label htmlFor="difficulty">Difficulty:</label>
+        <div>
+          {[...Array(5)].map((_, index) => (
+            <FaStar
+              key={index}
+              color={index < difficulty ? '#ffc107' : '#e4e5e9'}
+              size={25}
+              className="inline-block mr-1 cursor-pointer"
+              onClick={() => handleStarClick(index + 1)} // Pass index + 1 as rating
+            />
+          ))}
+        </div>
         <textarea
           className="opacity-100 h-80 my-1.5 w-full h-1/4 px-5 bg-violet-600 min-h-10 p-2 border border-gray-300 rounded-3xl focus:outline-none focus:ring focus:border-blue-500"
           value={ingredients}
@@ -64,9 +71,10 @@ function AddRecipe() {
           onChange={(e) => handleChange('instructions', e.target.value)}
           placeholder="Recipe instructions"
         />
+      
       </div>
     </span>
-  )
+  );
 }
 
-export default AddRecipe
+export default AddRecipe;

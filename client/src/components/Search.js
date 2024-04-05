@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
 
+
 import '../index.css';
 
 function Search() {
