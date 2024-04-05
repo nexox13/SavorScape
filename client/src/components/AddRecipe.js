@@ -60,13 +60,13 @@ function AddRecipe() {
           ))}
         </div>
         <textarea
-          className="opacity-100 h-80 my-1.5 w-full h-1/4 px-5 bg-violet-600 min-h-10 p-2 border border-gray-300 rounded-3xl focus:outline-none focus:ring focus:border-blue-500"
+          className="opacity-100 h-80 my-1.5 w-full px-5 bg-violet-600 min-h-10 p-2 border border-gray-300 rounded-3xl focus:outline-none focus:ring focus:border-blue-500"
           value={ingredients}
           onChange={(e) => handleChange('ingredients', e.target.value)}
           placeholder="Recipe ingredients"
         />
         <textarea
-          className="opacity-100 my-1.5 w-full h-80 px-5 bg-violet-600 p-2 border border-gray-300 rounded-3xl focus:outline-none focus:ring focus:border-blue-500"
+          className="opacity-100 my-1.5 w-full h-80 min-h-10 px-5 bg-violet-600 p-2 border border-gray-300 rounded-3xl focus:outline-none focus:ring focus:border-blue-500"
           value={instructions}
           onChange={(e) => handleChange('instructions', e.target.value)}
           placeholder="Recipe instructions"
