@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useAppContext } from '../../contexts/AppContext';
 import mapboxgl from 'mapbox-gl';
 
 function MapRenderer() {
@@ -11,10 +12,16 @@ function MapRenderer() {
     const [zoom, setZoom] = useState(10);
     const [locationChecked, setLocationChecked] = useState(false);
 
+    const { mapTheme } = useAppContext();
+
     const initializeMap = useCallback(() => {
+        if (map.current) {
+            map.current.remove();
+        }
+
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
-            style: 'mapbox://styles/mapbox/dark-v11',
+            style: mapTheme,
             center: [lng, lat],
             zoom: zoom,
             attributionControl: false // This will disable Mapbox's default attribution control
@@ -25,7 +32,7 @@ function MapRenderer() {
             setLat(map.current.getCenter().lat.toFixed(2));
             setZoom(map.current.getZoom().toFixed(2));
         });
-    }, [lat, lng, zoom]);
+    }, [mapTheme, lng, lat, zoom]);
 
     const handleContextLost = useCallback(() => {
         console.log('WebGL context lost');
@@ -44,15 +51,11 @@ function MapRenderer() {
 
     useEffect(() => {
         mapboxgl.supported({ failIfMajorPerformanceCaveat: true });
-
+    
         if (!map.current) {
             initializeMap();
-        } else {
-            map.current.on('webglcontextlost', handleContextLost);
-            map.current.on('webglcontextrestored', handleContextRestored);
         }
-
-        // Check location only once on component mount
+    
         if (!locationChecked && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 setLng(position.coords.longitude);
@@ -64,14 +67,20 @@ function MapRenderer() {
         } else if (!navigator.geolocation) {
             console.error('Geolocation is not supported by this browser.');
         }
-
+    
         return () => {
             if (map.current) {
                 map.current.off('webglcontextlost', handleContextLost);
                 map.current.off('webglcontextrestored', handleContextRestored);
             }
         };
-    }, [map, lat, lng, zoom, handleContextLost, handleContextRestored, initializeMap, locationChecked]);
+    }, [initializeMap, locationChecked]);
+    
+    useEffect(() => {
+        if (map.current) {
+            map.current.setStyle(mapTheme);
+        }
+    }, [mapTheme]);
 
     return (
         <div>

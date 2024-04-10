@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        purple: '#663399',
+      },
       borderRadius: {
         'none': '0',
         'sm': '0.125rem',

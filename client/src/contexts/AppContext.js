@@ -17,6 +17,8 @@ export const AppContextProvider = ({
     const [selectedCountry, setSelectedCountry] = useState('');
     const [searchedRecipe, setSearchedRecipe] = useState('');
 
+    const [mapTheme, setMapTheme] = useState('mapbox://styles/mapbox/dark-v11');
+
     return ( 
     <AppContext.Provider value = {
             {
@@ -32,7 +34,10 @@ export const AppContextProvider = ({
                 selectedCountry,
                 setSelectedCountry,
                 searchedRecipe,
-                setSearchedRecipe
+                setSearchedRecipe,
+
+                mapTheme,
+                setMapTheme
             }
         } >
         {
