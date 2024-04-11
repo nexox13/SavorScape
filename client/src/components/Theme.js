@@ -1,20 +1,23 @@
 import React from 'react';
+import { useAppContext } from '../contexts/AppContext';
 
 const Theme = ({ currentTheme, darkTheme, handleThemeToggle }) => {
+  const { colorTheme, setColorTheme } = useAppContext();
+
   const colors = [
-    { name: 'blue', color: 'bg-blue-500', borderColor: 'black'},
+    { name: 'blue', color: 'bg-blue-500', borderColor: 'black' },
     { name: 'red', color: 'bg-red-500', borderColor: 'black' },
-    { name: 'purple', color: 'bg-green-500', borderColor: 'black' },
+    { name: 'green', color: 'bg-green-500', borderColor: 'black' },
     { name: 'yellow', color: 'bg-yellow-500', borderColor: 'black' },
-    { name: 'yellow', color: 'bg-purple', borderColor: 'black' }
+    { name: 'purple', color: 'bg-purple', borderColor: 'black' }
   ];
 
   const changeTheme = (color) => {
-    // Implement your logic to change the theme based on color
+    setColorTheme(color);
   };
 
   return (
-    <div className="bg-purple rounded-lg shadow-md p-4">
+    <div className={`${colorTheme} rounded-lg shadow-md p-4`}>
       <div className="flex items-center justify-center min-h-16">
         <label htmlFor="themeToggle" className="flex justify-around cursor-pointer">
           <div className="flex items-center space-x-2">
@@ -69,7 +72,7 @@ const Theme = ({ currentTheme, darkTheme, handleThemeToggle }) => {
           <button
             key={name}
             className={`rounded-lg w-8 h-8 border-2 ${color} border-${borderColor}`}
-            onClick={() => changeTheme(name)}
+            onClick={() => changeTheme(color)}
           />
         ))}
       </div>

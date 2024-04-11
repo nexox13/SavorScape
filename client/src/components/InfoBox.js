@@ -21,7 +21,7 @@ function InfoBox() {
     setShowAddRecipe,
     setShowSettings,
     mapTheme,
-    setMapTheme
+    setMapTheme,
   } = useAppContext();
   
   const toggleClose = () => {
