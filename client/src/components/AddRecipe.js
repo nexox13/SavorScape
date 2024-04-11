@@ -76,7 +76,7 @@ function AddRecipe() {
   return (
     <span style={{ opacity: 1, backgroundColor: 'white', fontWeight: 'bold' }}>
       <div className="overflow-auto bg-gray-100 p-4 rounded-xl shadow-md h-auto">
-        <h2 className="text-xl font-bold mb-4 justify-center">Add a Recipe</h2>
+        <h2 className="text-xl font-bold mb-4 flex justify-center">Add a Recipe</h2>
         <input
           className="opacity-100 my-1.5 w-full h-1/4 px-5 bg-purple min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500"
           value={name}
