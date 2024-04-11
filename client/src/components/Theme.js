@@ -5,10 +5,10 @@ const Theme = ({ currentTheme, darkTheme, handleThemeToggle }) => {
   const { colorTheme, setColorTheme } = useAppContext();
 
   const colors = [
-    { name: 'blue', color: 'bg-blue-500', borderColor: 'black' },
-    { name: 'red', color: 'bg-red-500', borderColor: 'black' },
-    { name: 'green', color: 'bg-green-500', borderColor: 'black' },
-    { name: 'yellow', color: 'bg-yellow-500', borderColor: 'black' },
+    { name: 'blue', color: 'bg-blue', borderColor: 'black' },
+    { name: 'red', color: 'bg-red', borderColor: 'black' },
+    { name: 'green', color: 'bg-green', borderColor: 'black' },
+    { name: 'yellow', color: 'bg-yellow', borderColor: 'black' },
     { name: 'purple', color: 'bg-purple', borderColor: 'black' }
   ];
 

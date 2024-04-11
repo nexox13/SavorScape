@@ -31,7 +31,7 @@ function Notepad() {
         />
         <div>
           <button
-            className="mt-10 bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="mt-10 bg-black hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={() => {
               localStorage.removeItem('notepad_content');
               setContent('');
