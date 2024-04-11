@@ -22,9 +22,9 @@ router.post('/recipes', async (req, res) => {
     country: req.body.country,
     name: req.body.name,
     // image: req.body.image,
-    // preparationtime: req.body.preparationtime,
+    preparationtime: req.body.preparationtime,
     difficulty: req.body.difficulty,
-    // ingredients: req.body.ingredients,
+    ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   });
 

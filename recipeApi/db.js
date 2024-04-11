@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+dotenv.config();
+
+const link = process.env.DB_LINK
 
 function loadDb(){
-  mongoose.connect('mongodb://root:example@mongodb:27017', {
+  mongoose.connect(link, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).then(() => {

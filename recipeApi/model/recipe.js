@@ -21,20 +21,20 @@ const recipeSchema = new mongoose.Schema({
   //   type: String,
   //   required: true
   // },
-  // ingredients: [
-  //   {
-  //     name: {
-  //       type: String,
-  //       required: true,
-  //     },
-  //     amount: {
-  //       type: String,
-  //     },
-  //     unit: {
-  //       type: String,
-  //     },
-  //   },
-  // ],
+  ingredients: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      amount: {
+        type: String,
+      },
+      unit: {
+        type: String,
+      },
+    },
+  ],
   instructions: {
     type: String,
     required: true,
