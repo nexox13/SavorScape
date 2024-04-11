@@ -16,6 +16,26 @@ router.get('/recipes', async (req, res) => {
   }
 });
 
+// GET: Alle Rezepte abrufen Land
+router.get('/recipes/:country', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({land: req.body.country})
+    res.json(recipes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET: Rezepte abrufen name
+router.get('/recipes/:name', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({land: req.body.name})
+    res.json(recipes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // POST: Neues Rezept hinzufügen
 router.post('/recipes', async (req, res) => {
   const recipe = new Recipe({
