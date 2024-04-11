@@ -14,8 +14,11 @@ function Settings({ mapTheme, setMapTheme }) {
   };
 
   return (
-    <div className="flex flex-col space-y-4 p-4 bg-white dark:bg-purple rounded-lg shadow-md">
+    <div className="flex flex-col space-y-4 p-4 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold">Settings</h2>
+      <div>
+        <h2 className="text-xl font-semibold">Theme:</h2>
+      </div>
       <Theme
         currentTheme={currentTheme}
         darkTheme={darkTheme}
