@@ -20,7 +20,7 @@ function Notepad() {
   };
 
   return (
-    <span style={{ opacity: 1, backgroundColor:'white', fontWeight: 'bold' }}>
+    <span style={{backgroundColor:'white', fontWeight: 'bold' }}>
       <div className="bg-gray-100 p-4 rounded-xl shadow-md">
         <h2 className="text-xl font-bold mb-4 flex justify-center">Notepad</h2>
         <textarea

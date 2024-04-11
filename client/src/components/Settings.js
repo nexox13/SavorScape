@@ -15,7 +15,7 @@ function Settings({ mapTheme, setMapTheme }) {
 
   return (
     <div className="flex flex-col space-y-4 p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold flex justify-center">Settings</h2>
+      <h2 className="text-xl font-bold flex justify-center">Settings</h2>
       <div>
         <h2 className="text-xl font-semibold">Theme:</h2>
       </div>
@@ -24,6 +24,7 @@ function Settings({ mapTheme, setMapTheme }) {
         darkTheme={darkTheme}
         handleThemeToggle={handleThemeToggle}
       />
+
     </div>
   );
 }

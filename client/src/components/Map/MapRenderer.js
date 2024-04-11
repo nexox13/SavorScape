@@ -84,7 +84,7 @@ function MapRenderer() {
 
     return (
         <div>
-            <div className="p-2 w-auto fixed bottom-2 left-2 z-50 bg-white rounded-xl" style={{ opacity: 0.65 }}>
+            <div className="p-2 w-auto fixed bottom-2 left-2 z-50 bg-white rounded-xl" style={{ opacity: 0.8 }}>
                 <span style={{ opacity: 1, fontWeight: 'bold' }}>
                     Longitude: {lng !== null ? lng : 'Loading...'} ~ Latitude: {lat !== null ? lat : 'Loading...'} ~ Zoom: {zoom}
                 </span>
