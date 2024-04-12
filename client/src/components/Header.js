@@ -59,7 +59,7 @@ function Header() {
     }
   };
   return (
-    <div className="fixed top-0 w-full h-20 flex justify-evenly items-center opacity-7 z-50">
+    <div className="fixed top-0 w-full h-20 flex justify-evenly items-center z-50">
         
         <span className="bg-white rounded-full p-2.5 opacity-75 border -2 border-solid border-black"> 
           <Icon label="Notepad" onClick={() => toggleInfoBox('notepad')}>

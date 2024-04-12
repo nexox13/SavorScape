@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -7,7 +6,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        purple: '#663399',
+        blue: '#3B82F6',   
+        red: '#EF4444',  
+        green: '#10B981',  
+        yellow: '#FBBF24',  
+        purple: '#663399',  
       },
       borderRadius: {
         'none': '0',
@@ -23,4 +26,3 @@ export default {
   },
   plugins: [],
 }
-

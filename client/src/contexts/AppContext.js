@@ -18,6 +18,7 @@ export const AppContextProvider = ({
     const [searchedRecipe, setSearchedRecipe] = useState('');
 
     const [mapTheme, setMapTheme] = useState('mapbox://styles/mapbox/dark-v11');
+    const [colorTheme, setColorTheme] = useState('bg-purple')
 
     return ( 
     <AppContext.Provider value = {
@@ -37,7 +38,9 @@ export const AppContextProvider = ({
                 setSearchedRecipe,
 
                 mapTheme,
-                setMapTheme
+                setMapTheme,
+                colorTheme,
+                setColorTheme
             }
         } >
         {
