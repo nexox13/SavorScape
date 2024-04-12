@@ -7,8 +7,8 @@ function MapRenderer() {
     
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(null);
-    const [lat, setLat] = useState(null);
+    const [lng, setLng] = useState(parseFloat(localStorage.getItem('lng')) || 0);
+    const [lat, setLat] = useState(parseFloat(localStorage.getItem('lat')) || 0);
     const [zoom, setZoom] = useState(10);
     const [locationChecked, setLocationChecked] = useState(false);
 
