@@ -33,7 +33,7 @@ function Search() {
   ];
 
   return (
-    <div className="p-0.5 h-14 bg-white rounded-2xl opacity-65">
+    <div className="p-0.5 h-14 bg-white rounded-2xl opacity-100">
       <form onSubmit={handleSubmit} className='form-container'>
       <select
         value={selectedCountry}
