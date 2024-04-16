@@ -28,10 +28,12 @@ const recipeSchema = new mongoose.Schema({
         required: true,
       },
       amount: {
-        type: String,
+        type: number,
+        required: true,
       },
       unit: {
         type: String,
+        required: true,
       },
     },
   ],
