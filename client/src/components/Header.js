@@ -61,7 +61,7 @@ function Header() {
   return (
     <div className="fixed top-0 w-full h-20 flex justify-evenly items-center z-50">
         
-        <span className="bg-white rounded-full p-2.5 opacity-75 border -2 border-solid border-black"> 
+        <span className="bg-white rounded-full p-2.5 opacity-100 border -2 border-solid border-black"> 
           <Icon label="Notepad" onClick={() => toggleInfoBox('notepad')}>
           <svg
             stroke="currentColor"
@@ -81,7 +81,7 @@ function Header() {
           </Icon>
         </span>
 
-        <span className="bg-white rounded-full p-2.5 opacity-75 border -2 border-solid border-black"> 
+        <span className="bg-white rounded-full p-2.5 opacity-100 border -2 border-solid border-black"> 
           <Icon label="Impressum" onClick={() => toggleInfoBox('impressum')}>
           <svg
             stroke="currentColor"
@@ -102,7 +102,7 @@ function Header() {
         
         <Search/>
 
-        <span className="bg-white rounded-full p-2.5 opacity-75 border -2 border-solid border-black"> 
+        <span className="bg-white rounded-full p-2.5 opacity-100 border -2 border-solid border-black"> 
           <Icon label="AddNewRecipe" onClick={() => toggleInfoBox('addRecipe')}>
           <svg
             stroke="currentColor"
@@ -119,7 +119,7 @@ function Header() {
           </Icon>
         </span>
         
-        <span className="bg-white rounded-full p-2.5 opacity-75 border -2 border-solid border-black"> 
+        <span className="bg-white rounded-full p-2.5 opacity-100 border -2 border-solid border-black"> 
           <Icon label="Settings" onClick={() => toggleInfoBox('settings')}>
           <svg
               stroke="currentColor"

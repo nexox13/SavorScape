@@ -20,6 +20,7 @@ export const AppContextProvider = ({
     const [mapTheme, setMapTheme] = useState('mapbox://styles/mapbox/dark-v11');
     const [colorTheme, setColorTheme] = useState('bg-purple')
 
+
     return ( 
     <AppContext.Provider value = {
             {

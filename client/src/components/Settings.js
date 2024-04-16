@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Theme from './Theme'; // Import the new component
+import Preferences from './Preferences';
 
 function Settings({ mapTheme, setMapTheme }) {
   const lightTheme = 'mapbox://styles/mapbox/streets-v12';
@@ -24,6 +25,11 @@ function Settings({ mapTheme, setMapTheme }) {
         darkTheme={darkTheme}
         handleThemeToggle={handleThemeToggle}
       />
+
+      <div>
+        <h2 className="text-xl font-semibold">Preferences:</h2>
+        <Preferences/>
+      </div>
 
     </div>
   );
