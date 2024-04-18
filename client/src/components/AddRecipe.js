@@ -8,42 +8,30 @@ function AddRecipe() {
 
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState([{ name: '', amount: '', unit: '' }]);
   const [instructions, setInstructions] = useState('');
   const [difficulty, setDifficulty] = useState(0); // Initial difficulty set to 0
-  const [ingName, setIngName] = useState('')
-  const [ingAmount, setIngAmount] = useState ()
-  const [ingUnit, setIngUnit] = useState('')
 
-  const units = ['kg','g','l','ml']
+  const units = ['kg', 'g', 'l', 'ml'];
 
   const handleStarClick = (rating) => {
     setDifficulty(rating);
   };
 
-  const handleChange = (type, value) => {
-    switch (type) {
-      case 'name':
-        setName(value);
-        break;
-      case 'country':
-        setCountry(value);
-        break;
-      case 'instructions':
-        setInstructions(value);
-        break;
-      case 'ingName':
-        setIngName(value);
-        break;
-      case 'ingAmount':
-        setIngAmount(value);
-        break;
-      case 'ingUnit':
-        setIngUnit(value);
-        break;
-      default:
-        break;
-    }
+  const handleChange = (index, type, value) => {
+    const newIngredients = [...ingredients];
+    newIngredients[index][type] = value;
+    setIngredients(newIngredients);
+  };
+
+  const addIngredient = () => {
+    setIngredients([...ingredients, { name: '', amount: '', unit: '' }]);
+  };
+
+  const removeIngredient = (index) => {
+    const newIngredients = [...ingredients];
+    newIngredients.splice(index, 1);
+    setIngredients(newIngredients);
   };
 
   const addRecipes = async () => {
@@ -53,21 +41,17 @@ function AddRecipe() {
       country,
       ingredients,
       instructions,
-      difficulty
+      difficulty,
     };
 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(recipeData)
+        body: JSON.stringify(recipeData),
       });
-
-      if(response.ok){
-        deleteInput()
-      }
 
       if (!response.ok) {
         throw new Error('Failed to add recipe');
@@ -79,48 +63,36 @@ function AddRecipe() {
       console.error('Error adding recipe:', error.message);
     }
   };
-  
-  const deleteInput = () => {
-    setName('')
-    setCountry('')
-    setDifficulty(0)
-    setIngAmount()
-    setIngUnit('')
-    setIngredients([])
-    setInstructions('')
-    setIngName('')
-  }
-
-  const ingredientsArr = () => {
-    setIngredients(['name:'+ingName+','+
-                    'amount:'+ingAmount+','+
-                    'unit:'+ingUnit])
-    
-  }
 
   return (
-    <span style={{backgroundColor: 'white', fontWeight: 'bold' }}>
+    <span style={{ backgroundColor: 'white', fontWeight: 'bold' }}>
       <div className="overflow-auto bg-gray-100 p-4 rounded-xl shadow-md h-auto">
         <h2 className="text-xl font-bold flex justify-center">Add a Recipe</h2>
-        <label htmlFor="difficulty" required>Recipe Name:</label>
+        <label htmlFor="name" required>
+          Recipe Name:
+        </label>
         <input
           className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
           value={name}
-          onChange={(e) => handleChange('name', e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           placeholder="Recipe name"
           required
         />
 
-        <label htmlFor="difficulty" required>Recipe Country:</label>
+        <label htmlFor="country" required>
+          Recipe Country:
+        </label>
         <input
           className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
           value={country}
-          onChange={(e) => handleChange('country', e.target.value)}
+          onChange={(e) => setCountry(e.target.value)}
           placeholder="Recipe country"
           required
         />
 
-        <label htmlFor="difficulty" required>Difficulty:</label>
+        <label htmlFor="difficulty" required>
+          Difficulty:
+        </label>
         <div>
           {[...Array(5)].map((_, index) => (
             <FaStar
@@ -133,52 +105,82 @@ function AddRecipe() {
           ))}
         </div>
 
-        <label htmlFor="difficulty" required>Ingredients:</label>
-        <input
-          className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
-          value={ingName}
-          onChange={(e) => handleChange('ingName', e.target.value)}
-          placeholder="Name of Ingredient"
-          required
-        />
-       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <input
-          className={`${colorTheme} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
-          value={ingAmount}
-          onChange={(e) => handleChange('ingAmount', e.target.value)}
-          placeholder="Amount"
-          required
-        />
-        <form className={`w-full flex justify-end`}>
-          <select className={`${colorTheme} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}>
-            <option selected>Choose a unit</option>
-            {units.map((unit) => (
-              <option key={unit} value={unit}>{unit}</option>
-            ))}
-          </select>
-        </form>
-      </div>
-      <Icon label="add">
-        <svg 
-          className="mt-2"
-          stroke="currentColor" 
-          fill="currentColor" 
-          stroke-width="0" 
-          viewBox="0 0 1024 1024" 
-          height="1.7em" 
-          width="1.7em" 
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M696 480H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"></path>
-          <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
-        </svg>
-      </Icon>
-      
-        <label htmlFor="difficulty" required>Instructions:</label>
+        <label htmlFor="ingredients" required>
+          Ingredients:
+        </label>
+        {ingredients.map((ingredient, index) => (
+          <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <input
+              className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
+              value={ingredient.name}
+              onChange={(e) => handleChange(index, 'name', e.target.value)}
+              placeholder="Name of Ingredient"
+              required
+            />
+            <div className="w-full flex justify-end">
+              <input
+                className={`${colorTheme} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                value={ingredient.amount}
+                onChange={(e) => handleChange(index, 'amount', e.target.value)}
+                placeholder="Amount"
+                required
+              />
+              <select
+                className={`${colorTheme} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                value={ingredient.unit}
+                onChange={(e) => handleChange(index, 'unit', e.target.value)}
+              >
+                <option value="">Choose a unit</option>
+                {units.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {index !== 0 && (
+              <Icon label="remove" onClick={() => removeIngredient(index)}>
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 512 512"
+                  height="1.7em"
+                  width="1.7em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"></path>
+                  <path d="M363 277H149v-42h214v42z"></path>
+                </svg>
+              </Icon>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <Icon label="add" onClick={addIngredient}>
+            <svg
+              className="mt-2"
+              stroke="currentColor"
+              fill="currentColor"
+              strokeWidth="0"
+              viewBox="0 0 1024 1024"
+              height="1.7em"
+              width="1.7em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M696 480H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"></path>
+              <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
+            </svg>
+          </Icon>
+        </div>
+          </div>
+        ))}
+        
+        <label htmlFor="instructions" required>
+          Instructions:
+        </label>
         <textarea
           className={`my-1.5 w-full h-80 min-h-10 px-5 ${colorTheme} p-2 border border-gray-300 rounded-3xl focus:outline-none focus:ring focus:border-blue-500`}
           value={instructions}
-          onChange={(e) => handleChange('instructions', e.target.value)}
+          onChange={(e) => setInstructions(e.target.value)}
           placeholder="Recipe instructions"
           required
         />
