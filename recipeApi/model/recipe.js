@@ -28,7 +28,7 @@ const recipeSchema = new mongoose.Schema({
         required: true,
       },
       amount: {
-        type: number,
+        type: Number,
         required: true,
       },
       unit: {
