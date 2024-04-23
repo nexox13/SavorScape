@@ -6,7 +6,7 @@ import Icon from './Icon';
 function AddRecipe() {
   const { colorTheme } = useAppContext();
 
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [country, setCountry] = useState('');
   const [ingredients, setIngredients] = useState([{ name: '', amount: '', unit: '' }]);
   const [instructions, setInstructions] = useState('');
@@ -29,15 +29,18 @@ function AddRecipe() {
   };
 
   const removeIngredient = (index) => {
-    const newIngredients = [...ingredients];
-    newIngredients.splice(index, 1);
-    setIngredients(newIngredients);
+    if(index != 0){
+      const newIngredients = [...ingredients];
+      newIngredients.splice(index, 1);
+      setIngredients(newIngredients);
+    }
+    
   };
 
   const addRecipes = async () => {
     const url = `http://10.115.1.14:3001/api/recipes`;
     const recipeData = {
-      name,
+      title,
       country,
       ingredients,
       instructions,
@@ -68,13 +71,13 @@ function AddRecipe() {
     <span style={{ backgroundColor: 'white', fontWeight: 'bold' }}>
       <div className="overflow-auto bg-gray-100 p-4 rounded-xl shadow-md h-auto">
         <h2 className="text-xl font-bold flex justify-center">Add a Recipe</h2>
-        <label htmlFor="name" required>
+        <label htmlFor="title" required>
           Recipe Name:
         </label>
         <input
           className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="Recipe name"
           required
         />
@@ -109,7 +112,7 @@ function AddRecipe() {
           Ingredients:
         </label>
         {ingredients.map((ingredient, index) => (
-          <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div key={index}>
             <input
               className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
               value={ingredient.name}
@@ -138,28 +141,14 @@ function AddRecipe() {
                 ))}
               </select>
             </div>
-            {index !== 0 && (
-              <Icon label="remove" onClick={() => removeIngredient(index)}>
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 512 512"
-                  height="1.7em"
-                  width="1.7em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"></path>
-                  <path d="M363 277H149v-42h214v42z"></path>
-                </svg>
-              </Icon>
-            )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          </div>
+        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex">
           <Icon label="add" onClick={addIngredient}>
             <svg
               className="mt-2"
-              stroke="currentColor"
-              fill="currentColor"
+              stroke="green"
+              fill="green"
               strokeWidth="0"
               viewBox="0 0 1024 1024"
               height="1.7em"
@@ -170,10 +159,24 @@ function AddRecipe() {
               <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
             </svg>
           </Icon>
+          {ingredients.length > 1 && ( 
+            <Icon label="remove" onClick={() => removeIngredient(ingredients.length - 1)}>
+              <svg
+                className="mt-2"
+                stroke="red"
+                fill="red"
+                strokeWidth="0"
+                viewBox="0 0 512 512"
+                height="1.8em"
+                width="1.8em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"></path>
+                <path d="M363 277H149v-42h214v42z"></path>
+              </svg>
+            </Icon>
+          )}
         </div>
-          </div>
-        ))}
-        
         <label htmlFor="instructions" required>
           Instructions:
         </label>
