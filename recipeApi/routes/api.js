@@ -29,7 +29,7 @@ router.get('/recipes/:country', async (req, res) => {
 // GET: Rezepte abrufen name
 router.get('/recipes/:name', async (req, res) => {
   try {
-    const recipes = await Recipe.find({land: req.body.name})
+    const recipes = await Recipe.find({name: req.body.name})
     res.json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });
