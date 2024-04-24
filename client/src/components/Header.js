@@ -5,8 +5,8 @@ import { useAppContext } from '../contexts/AppContext';
 
 function Header() {
 
-  const { showImpressum, 
-          setShowImpressum, 
+  const { showLogin, 
+          setShowLogin, 
           showAddRecipe ,
           setShowAddRecipe, 
           showSettings ,
@@ -20,25 +20,25 @@ function Header() {
     switch (infoBoxType) {
       case 'notepad':
         setShowNotepad(true);
-        setShowImpressum(false);
+        setShowLogin(false);
         setShowAddRecipe(false);
         setShowSettings(false);
         if (showNotepad === true) {
           setShowNotepad(false);
         }
         break;
-      case 'impressum':
+      case 'login':
         setShowNotepad(false);
-        setShowImpressum(true);
+        setShowLogin(true);
         setShowAddRecipe(false);
         setShowSettings(false);
-        if (showImpressum === true) {
-          setShowImpressum(false);
+        if (showLogin === true) {
+          setShowLogin(false);
         }
         break;
       case 'addRecipe':
         setShowNotepad(false);
-        setShowImpressum(false);
+        setShowLogin(false);
         setShowAddRecipe(true);
         setShowSettings(false);
         if (showAddRecipe === true) {
@@ -47,7 +47,7 @@ function Header() {
         break;
       case 'settings':
         setShowNotepad(false);
-        setShowImpressum(false);
+        setShowLogin(false);
         setShowAddRecipe(false);
         setShowSettings(true);
         if (showSettings === true) {
@@ -82,7 +82,7 @@ function Header() {
         </span>
 
         <span className="bg-white rounded-full p-2.5 opacity-100 border -2 border-solid border-black"> 
-          <Icon label="Impressum" onClick={() => toggleInfoBox('impressum')}>
+          <Icon label="Login" onClick={() => toggleInfoBox('login')}>
           <svg
             stroke="currentColor"
             fill="currentColor"

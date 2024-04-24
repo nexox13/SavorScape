@@ -9,7 +9,7 @@ const AppContext = createContext();
 export const AppContextProvider = ({
     children
 }) => {
-    const [showImpressum, setShowImpressum] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
     const [showAddRecipe, setShowAddRecipe] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [showNotepad, setShowNotepad] = useState(false);
@@ -24,8 +24,8 @@ export const AppContextProvider = ({
     return ( 
     <AppContext.Provider value = {
             {
-                showImpressum,
-                setShowImpressum,
+                showLogin,
+                setShowLogin,
                 showAddRecipe,
                 setShowAddRecipe,
                 showSettings,

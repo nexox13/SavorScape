@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
 import Notepad from './Notepad';
-import Impressum from './Impressum';
+import Login from './Login';
 import AddRecipe from './AddRecipe';
 import Settings from './Settings';
 
@@ -13,11 +13,11 @@ import '../index.css';
 function InfoBox() {
   const { 
     showNotepad, 
-    showImpressum, 
+    showLogin,  
     showAddRecipe, 
     showSettings, 
     setShowNotepad, 
-    setShowImpressum, 
+    setShowLogin,  
     setShowAddRecipe,
     setShowSettings,
     mapTheme,
@@ -26,7 +26,7 @@ function InfoBox() {
   
   const toggleClose = () => {
     setShowNotepad(false)
-    setShowImpressum(false)
+    setShowLogin(false)
     setShowAddRecipe(false)
     setShowSettings(false)
   }
@@ -35,8 +35,8 @@ function InfoBox() {
 
   if (showNotepad) {
     content = <Notepad />;
-  } else if (showImpressum) {
-    content = <Impressum />;
+  } else if (showLogin) {
+    content = <Login />;
   } else if (showAddRecipe) {
     content = <AddRecipe />;
   } else if (showSettings) {
