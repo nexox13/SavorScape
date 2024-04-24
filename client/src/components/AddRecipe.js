@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useAppContext } from '../contexts/AppContext';
 import Icon from './Icon';
+import * as Papa from 'papaparse';
 
 function AddRecipe() {
   const { colorTheme } = useAppContext();
 
   const [title, setTitle] = useState('');
   const [country, setCountry] = useState('');
+  const [countriesList, setCountriesList] = useState([]);
   const [ingredients, setIngredients] = useState([{ name: '', amount: '', unit: '' }]);
   const [instructions, setInstructions] = useState('');
   const [difficulty, setDifficulty] = useState(0); // Initial difficulty set to 0
+  const [errors, setErrors] = useState({});
 
   const units = ['kg', 'g', 'l', 'ml'];
+
+  useEffect(() => {
+    // Load and parse the CSV file on component mount
+    const fetchCountries = async () => {
+      const response = await fetch('../validation/country.csv'); // Adjust path accordingly
+      const reader = response.body.getReader();
+      const result = await reader.read();
+      const decoder = new TextDecoder('utf-8');
+      const csv = decoder.decode(result.value);
+      const parsedData = Papa.parse(csv, { header: true }).data;
+      setCountriesList(parsedData.map((row) => row.value)); // Assuming the country column in CSV is named 'country'
+    };
+
+    fetchCountries();
+  }, []);
 
   const handleStarClick = (rating) => {
     setDifficulty(rating);
@@ -37,7 +55,38 @@ function AddRecipe() {
     
   };
 
+  const validateInputs = () => {
+    const errors = {};
+    if (!title.trim()) {
+      errors.title = 'Title is required';
+    }
+    if (!country.trim()) {
+      errors.country = 'Country is required';
+    } else if (!countriesList.includes(country.trim())) {
+      errors.country = 'Invalid country';
+    }
+    if (ingredients.some((ingredient) => !ingredient.name.trim() || !ingredient.amount.trim() || !ingredient.unit.trim())) {
+      errors.ingredients = 'All ingredient fields are required';
+    }
+    if (!instructions.trim()) {
+      errors.instructions = 'Instructions are required';
+    }
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const resetInput = () => {
+    setTitle('');
+    setCountry('');
+    setIngredients([{ name: '', amount: '', unit: '' }]);
+    setInstructions('');
+    setDifficulty(0);
+  };
+
   const addRecipes = async () => {
+    if (!validateInputs()) {
+      return;
+    }
     const url = `http://10.115.1.14:3001/api/recipes`;
     const recipeData = {
       title,
@@ -58,6 +107,9 @@ function AddRecipe() {
 
       if (!response.ok) {
         throw new Error('Failed to add recipe');
+      }
+      if(response.ok){
+        resetInput()
       }
 
       const responseData = await response.json();
@@ -81,6 +133,7 @@ function AddRecipe() {
           placeholder="Recipe name"
           required
         />
+        {errors.title && <p className="text-red">{errors.title}</p>}
 
         <label htmlFor="country" required>
           Recipe Country:
@@ -92,6 +145,7 @@ function AddRecipe() {
           placeholder="Recipe country"
           required
         />
+        {errors.country && <p className="text-red">{errors.country}</p>}
 
         <label htmlFor="difficulty" required>
           Difficulty:
@@ -107,6 +161,7 @@ function AddRecipe() {
             />
           ))}
         </div>
+        {errors.difficulty && <p className="text-red">{errors.difficulty}</p>}
 
         <label htmlFor="ingredients" required>
           Ingredients:
@@ -141,6 +196,7 @@ function AddRecipe() {
                 ))}
               </select>
             </div>
+            
           </div>
         ))}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex">
@@ -177,6 +233,8 @@ function AddRecipe() {
             </Icon>
           )}
         </div>
+        {errors.ingredient && <p className="text-red">{errors.ingredient}</p>}
+
         <label htmlFor="instructions" required>
           Instructions:
         </label>
@@ -187,6 +245,7 @@ function AddRecipe() {
           placeholder="Recipe instructions"
           required
         />
+        {errors.instructions && <p className="text-red">{errors.instructions}</p>}
 
         <button
           className="mt-10 bg-black hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
