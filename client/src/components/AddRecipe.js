@@ -18,17 +18,21 @@ function AddRecipe() {
   const units = ['kg', 'g', 'l', 'ml'];
 
   useEffect(() => {
-    // Load and parse the CSV file on component mount
     const fetchCountries = async () => {
-      const response = await fetch('../validation/country.csv'); // Adjust path accordingly
-      const reader = response.body.getReader();
-      const result = await reader.read();
-      const decoder = new TextDecoder('utf-8');
-      const csv = decoder.decode(result.value);
-      const parsedData = Papa.parse(csv, { header: true }).data;
-      setCountriesList(parsedData.map((row) => row.value)); // Assuming the country column in CSV is named 'country'
+      try {
+        const response = await fetch('../country.csv');
+        const reader = response.body.getReader();
+        const result = await reader.read();
+        const decoder = new TextDecoder('utf-8');
+        const csv = decoder.decode(result.value);
+        const parsedData = Papa.parse(csv, { header: true }).data;
+        console.log(parsedData); // Log parsed data
+        setCountriesList(parsedData.map((row) => row.country)); // Changed from row.value to row.country
+      } catch (error) {
+        console.error('Error fetching or parsing countries:', error);
+      }
     };
-
+  
     fetchCountries();
   }, []);
 
@@ -62,7 +66,7 @@ function AddRecipe() {
     }
     if (!country.trim()) {
       errors.country = 'Country is required';
-    } else if (!countriesList.includes(country.trim())) {
+    } else if (countriesList.length === 0 || !countriesList.map((country) => country.value).includes(country.trim())) {
       errors.country = 'Invalid country';
     }
     if (ingredients.some((ingredient) => !ingredient.name.trim() || !ingredient.amount.trim() || !ingredient.unit.trim())) {
@@ -74,6 +78,7 @@ function AddRecipe() {
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
+  
 
   const resetInput = () => {
     setTitle('');
