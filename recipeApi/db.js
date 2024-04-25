@@ -6,6 +6,7 @@ const link = process.env.DB_LINK
 
 function loadDb(){
   mongoose.connect(link, {
+    dbName: "savorscapeDB",
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).then(() => {

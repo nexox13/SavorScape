@@ -43,6 +43,6 @@ const recipeSchema = new mongoose.Schema({
   },
 });
 
-const Recipe = mongoose.model('savorscape', recipeSchema);
+const Recipe = mongoose.model('recipes', recipeSchema);
 
 module.exports = Recipe;

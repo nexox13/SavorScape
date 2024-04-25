@@ -1,70 +1,74 @@
+const express = require('express');
+const router = express.Router();
 const Recipe = require('../model/recipe');
 
-// Create a new recipe
-exports.createRecipe = async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const { title, ingredients, instructions } = req.body;
-    const newRecipe = new Recipe({
-      title,
-      ingredients,
-      instructions,
-    });
-    const savedRecipe = await newRecipe.save();
-    res.status(201).json(savedRecipe);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Get all recipes
-exports.getAllRecipes = async (req, res) => {
-  try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find({})
     res.json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
 
-// Get a specific recipe by ID
-exports.getRecipeById = async (req, res) => {
+// GET: Alle Rezepte abrufen Land
+router.get('/:country', async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-    res.json(recipe);
+    const recipes = await Recipe.find({land: req.body.country})
+    res.json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
 
-// Update a recipe
-exports.updateRecipe = async (req, res) => {
+// GET: Rezepte abrufen name
+router.get('/:name', async (req, res) => {
   try {
-    const updatedRecipe = await Recipe.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedRecipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
+    const recipes = await Recipe.find({name: req.body.name})
+    res.json(recipes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST: Neues Rezept hinzufügen
+router.post('/', async (req, res) => {
+  const recipe = new Recipe({
+    country: req.body.country,
+    title: req.body.title,
+    // image: req.body.image,
+    preparationtime: req.body.preparationtime,
+    difficulty: req.body.difficulty,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions,
+  });
+
+  try {
+    const newRecipe = await recipe.save();
+    res.status(201).json(newRecipe);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// PUT: Rezept bearbeiten
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedRecipe);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-};
+});
 
-// Delete a recipe
-exports.deleteRecipe = async (req, res) => {
+// DELETE: Rezept löschen
+router.delete('/:id', async (req, res) => {
   try {
-    const deletedRecipe = await Recipe.findByIdAndDelete(req.params.id);
-    if (!deletedRecipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-    res.json({ message: 'Recipe deleted successfully' });
+    await Recipe.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Rezept gelöscht' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
+
+module.exports = router;
