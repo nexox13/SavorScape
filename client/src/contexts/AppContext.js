@@ -18,7 +18,7 @@ export const AppContextProvider = ({
     const [searchedRecipe, setSearchedRecipe] = useState('')
     const [searchSubmit, setSearchSubmit] = useState(false);
 
-    const [mapTheme, setMapTheme] = useState('mapbox://styles/mapbox/dark-v11');
+    const [mapTheme, setMapTheme] = useState(localStorage.getItem('mapTheme') || 'mapbox://styles/mapbox/dark-v11');
     const [colorTheme, setColorTheme] = useState('bg-purple')
 
     const [loggedIn, setLoggedIn] = useState(false);

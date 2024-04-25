@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppContext } from '../contexts/AppContext';
-
 
 import '../index.css';
 
 function Search() {
-  const { selectedCountry, setSelectedCountry, searchedRecipe, setSearchedRecipe, setSearchSubmit } = useAppContext();
+  const { setSelectedCountry, setSearchedRecipe, setSearchSubmit } = useAppContext();
+  const [selectedCountryInput, setSelectedCountryInput] = useState('');
+  const [searchedRecipeInput, setSearchedRecipeInput] = useState('');
 
-  const handleSelectCountry = (event) => {
-    setSelectedCountry(event.target.value);
+  const handleSelectCountryChange = (event) => {
+    setSelectedCountryInput(event.target.value);
   };
 
   const handleSearchRecipeChange = (event) => {
-    setSearchedRecipe(event.target.value);
+    setSearchedRecipeInput(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if(selectedCountry == '' && searchedRecipe == ''){
+    if (selectedCountryInput === '' && searchedRecipeInput === '') {
       console.log("Please insert a country or a recipe");
-  }
-  else{
+    } else {
       setSearchSubmit(true);
-      console.log('Selected Country:', selectedCountry, 'Searched Recipe:', searchedRecipe);
-  }
+      console.log('Selected Country:', selectedCountryInput, 'Searched Recipe:', searchedRecipeInput);
+
+      setSelectedCountry(selectedCountryInput);
+      setSearchedRecipe(searchedRecipeInput);
+
+      setSelectedCountryInput('');
+      setSearchedRecipeInput('');
+    }
   };
 
   const countries = [
@@ -40,26 +46,25 @@ function Search() {
   return (
     <div className="p-0.5 h-14 bg-white rounded-2xl opacity-100">
       <form onSubmit={handleSubmit} className='form-container'>
-      <select
-        value={selectedCountry}
-        onChange={handleSelectCountry}
-        className="rounded-2xl bg-white hover:cursor-pointer text-center"
-        style={{ textAlignLast: 'center' }} 
-      >
-        <option value="" disabled>Select country</option>
-        {countries.map((country) => (
-          <option key={country.label} value={country.label} className="hover:cursor-pointer bg-white text-center">
-            {country.flag} {country.value}
-          </option>
-        ))}
-      </select>
-
+        <select
+          value={selectedCountryInput}
+          onChange={handleSelectCountryChange}
+          className="rounded-2xl bg-white hover:cursor-pointer text-center"
+          style={{ textAlignLast: 'center' }} 
+        >
+          <option value="" disabled>Select country</option>
+          {countries.map((country) => (
+            <option key={country.label} value={country.label} className="hover:cursor-pointer bg-white text-center">
+              {country.flag} {country.value}
+            </option>
+          ))}
+        </select>
 
         <input
           placeholder="Recipe-Name"
           type="text"
           className="h-8 rounded-2xl text-center "
-          value={searchedRecipe}
+          value={searchedRecipeInput}
           onChange={handleSearchRecipeChange}
         />
         <button type="submit" className="px-3 py-1">

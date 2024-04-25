@@ -21,7 +21,7 @@ function Notepad() {
 
   return (
     <span style={{backgroundColor:'white', fontWeight: 'bold' }}>
-      <div className="bg-gray-100 p-4 rounded-xl shadow-md">
+      <div className="bg-gray-100 p-4 rounded-xl shadow-md mt-4">
         <h2 className="text-2xl font-bold mb-4 font-mono flex justify-center">Notepad</h2>
         <textarea
           className="w-full h-96 min-h-10 max-h-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"

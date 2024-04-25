@@ -12,10 +12,12 @@ function Settings({ mapTheme, setMapTheme }) {
     const newTheme = currentTheme === lightTheme ? darkTheme : lightTheme;
     setCurrentTheme(newTheme);
     setMapTheme(newTheme);
+
+    localStorage.setItem('mapTheme', newTheme);
   };
 
   return (
-    <div className="flex flex-col space-y-4 p-4 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col space-y-4 p-4 mt-4 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 font-mono flex justify-center">Settings</h2>
       <div>
         <h2 className="text-xl font-semibold">Theme:</h2>

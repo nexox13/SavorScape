@@ -126,7 +126,7 @@ function AddRecipe() {
 
   return (
     <span style={{ backgroundColor: 'white', fontWeight: 'bold' }}>
-      <div className="overflow-auto bg-gray-100 p-4 rounded-xl shadow-md h-auto">
+      <div className="overflow-auto bg-gray-100 p-4 rounded-xl shadow-md h-auto mt-4">
         <h2 className="text-xl font-bold flex justify-center">Add a Recipe</h2>
         <label htmlFor="title" required>
           Recipe Name:
