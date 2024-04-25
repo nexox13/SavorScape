@@ -39,4 +39,3 @@ services:
     links:
       - recipeapi
     command: npm start
-
