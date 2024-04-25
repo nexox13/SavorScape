@@ -15,10 +15,13 @@ export const AppContextProvider = ({
     const [showNotepad, setShowNotepad] = useState(false);
 
     const [selectedCountry, setSelectedCountry] = useState('');
-    const [searchedRecipe, setSearchedRecipe] = useState('');
+    const [searchedRecipe, setSearchedRecipe] = useState('')
+    const [searchSubmit, setSearchSubmit] = useState(false);
 
     const [mapTheme, setMapTheme] = useState('mapbox://styles/mapbox/dark-v11');
     const [colorTheme, setColorTheme] = useState('bg-purple')
+
+    const [loggedIn, setLoggedIn] = useState(false);
 
 
     return ( 
@@ -37,11 +40,16 @@ export const AppContextProvider = ({
                 setSelectedCountry,
                 searchedRecipe,
                 setSearchedRecipe,
+                searchSubmit,
+                setSearchSubmit,
 
                 mapTheme,
                 setMapTheme,
                 colorTheme,
-                setColorTheme
+                setColorTheme,
+
+                loggedIn,
+                setLoggedIn,
             }
         } >
         {

@@ -92,7 +92,7 @@ function AddRecipe() {
     if (!validateInputs()) {
       return;
     }
-    const url = `http://10.115.1.14:3001/api/recipes`;
+    const url = `http://10.115.1.14:3001/api/recipe`;
     const recipeData = {
       title,
       country,

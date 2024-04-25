@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import InfoBox from './InfoBox';
 import MapRenderer from './Map/MapRenderer';
 import { useAppContext } from '../contexts/AppContext';
+import ContentBox from './ContentBox/ContentBox';
 
 function MainContent() {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   
-  const { showLogin, showAddRecipe, showSettings, showNotepad } = useAppContext();
+  const { showLogin, showAddRecipe, showSettings, showNotepad, searchSubmit } = useAppContext();
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -30,6 +31,8 @@ function MainContent() {
         {showNotepad && <InfoBox type="notepad" className="z-50" />}
       </div>
       
+
+
       <div
         className={`absolute inset-0 bg-transparent ${clicked ? 'z-10' : '-z-10'}`}
         onClick={() => setClicked(false)}
@@ -38,6 +41,7 @@ function MainContent() {
       />
       
       <MapRenderer />
+
     </div>
   );
 }

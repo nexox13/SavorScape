@@ -5,7 +5,7 @@ import { useAppContext } from '../contexts/AppContext';
 import '../index.css';
 
 function Search() {
-  const { selectedCountry, setSelectedCountry, searchedRecipe, setSearchedRecipe } = useAppContext();
+  const { selectedCountry, setSelectedCountry, searchedRecipe, setSearchedRecipe, setSearchSubmit } = useAppContext();
 
   const handleSelectCountry = (event) => {
     setSelectedCountry(event.target.value);
@@ -17,9 +17,14 @@ function Search() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    console.log('Selected Country:', selectedCountry);
-    console.log('Searched Recipe:', searchedRecipe);
+
+    if(selectedCountry == '' && searchedRecipe == ''){
+      console.log("Please insert a country or a recipe");
+  }
+  else{
+      setSearchSubmit(true);
+      console.log('Selected Country:', selectedCountry, 'Searched Recipe:', searchedRecipe);
+  }
   };
 
   const countries = [
