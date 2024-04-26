@@ -1,10 +1,11 @@
 const express = require('express');
 const User = require('../model/user.js');
+const keycloak = require('../config/keycloak.js').getKeycloak();
  
 var router = express.Router();
 
 //Create a user
-router.post('/',function(req,res){
+router.post('/', function(req,res){
     //Create User Object
     const user = new User({
         firstName: req.body.firstName,
