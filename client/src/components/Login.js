@@ -1,90 +1,42 @@
 import React, { useState } from 'react';
-import Registerform from './Registerform';
 import Loginform from './Loginform';
+import RegisterForm from './Registerform';
+import { useAppContext } from '../contexts/AppContext';
 
-const LoginForm = ({ onSubmit }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+function Login() {
+  const { colorTheme } = useAppContext();
+  const [isRegistering, setIsRegistering] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Implement your own logic to handle form submission
-    // This example just clears the form for now
-    setUsername('');
-    setPassword('');
-    setErrorMessage('');
-    console.log('Submitted login form:', { username, password }); // Replace with your logic
-    onSubmit({ username, password });
+  const handleRegisterClick = () => {
+    setIsRegistering(true);
+  };
+
+  const handleGoBackClick = () => {
+    setIsRegistering(false);
   };
 
   return (
-    <>
-      <h1 className="flex justify-center font-mono text-xl">Login</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Login form JSX */}
-      </form>
-    </>
-  );
-};
+    <div>
+      <div className="bg-white rounded-xl p-4 h-auto flex flex-col justify-center items-center">
+        {/* Header */}
+        <div className="font-mono text-xl">Login</div>
+        
+        {/* Content */}
+        <div className="flex justify-center p-4 mt-6 w-full bg-gray-200 rounded-xl">
+          {isRegistering ? <RegisterForm /> : <Loginform />} 
+        </div>
 
-const RegistrationForm = ({ onSubmit }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Implement your own logic to handle registration submission
-    // This example just clears the form for now
-    setUsername('');
-    setPassword('');
-    setEmail('');
-    console.log('Submitted registration form:', { username, password, email }); // Replace with your logic
-    onSubmit({ username, password, email });
-  };
-
-  return (
-    <>
-      <h1 className="flex justify-center font-mono text-xl">Register</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Registration form JSX */}
-      </form>
-    </>
-  );
-};
-
-const Login = () => {
-  const [showRegisterForm, setShowRegisterForm] = useState(false);
-
-  const handleLoginFormSubmit = (data) => {
-    console.log('Login form submitted with data:', data);
-  };
-
-  const handleRegistrationFormSubmit = (data) => {
-    console.log('Registration form submitted with data:', data);
-  };
-
-  const handleFormSwitch = () => {
-    setShowRegisterForm(!showRegisterForm);
-  };
-
-  return (
-    <div className="container mx-auto mt-4 flex items-center">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
-        {showRegisterForm ? (
-          <RegistrationForm onSubmit={handleRegistrationFormSubmit} />
-        ) : (
-          <LoginForm onSubmit={handleLoginFormSubmit} />
-        )}
-        <div className="flex items-center justify-between">
-          <a href="#" onClick={handleFormSwitch} className="text-sm text-blue-500 hover:underline">
-            {showRegisterForm ? 'Already have an account? Login here' : 'New user? Register here'}
-          </a>
+        {/* Login/Register */}
+        <div className="flex justify-center p-4 mt-4 w-full bg-gray-200 rounded-xl">
+          {isRegistering ? (
+            <span onClick={handleGoBackClick} className="text-blue-500 cursor-pointer underline">Go back to Login</span>
+          ) : (
+            <span onClick={handleRegisterClick} className="text-blue-500 cursor-pointer underline"> Don't have an Account yet? Register here!</span>
+          )}
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Login;
