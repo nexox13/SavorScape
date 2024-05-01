@@ -42,6 +42,7 @@ function MainContent() {
       )}
     </div>
   );
+
 }
 
 export default MainContent;

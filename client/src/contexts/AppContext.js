@@ -23,7 +23,6 @@ export const AppContextProvider = ({
 
     const [loggedIn, setLoggedIn] = useState(false);
 
-
     return ( 
     <AppContext.Provider value = {
             {
@@ -49,7 +48,7 @@ export const AppContextProvider = ({
                 setColorTheme,
 
                 loggedIn,
-                setLoggedIn,
+                setLoggedIn
             }
         } >
         {

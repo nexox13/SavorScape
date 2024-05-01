@@ -23,8 +23,7 @@ function Search() {
       console.log("Please insert a country or a recipe");
     } else {
       setSearchSubmit(true);
-      console.log('Selected Country:', selectedCountryInput, 'Searched Recipe:', searchedRecipeInput);
-
+      console.table({ selectedCountryInput, searchedRecipeInput });
       setSelectedCountry(selectedCountryInput);
       setSearchedRecipe(searchedRecipeInput);
 
