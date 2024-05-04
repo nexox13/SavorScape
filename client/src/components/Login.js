@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Loginform from './Loginform';
-import RegisterForm from './Registerform';
+import Registerform from './Registerform';
 import { useAppContext } from '../contexts/AppContext';
 
 function Login() {
@@ -19,11 +19,11 @@ function Login() {
     <div>
       <div className="bg-white rounded-xl p-4 h-auto flex flex-col justify-center items-center">
         {/* Header */}
-        <div className="font-mono text-xl">Login</div>
+        <div className="font-mono text-xl">Login ~ Register</div>
         
         {/* Content */}
         <div className="flex justify-center p-4 mt-6 w-full bg-gray-200 rounded-xl">
-          {isRegistering ? <RegisterForm /> : <Loginform />} 
+          {isRegistering ? <Registerform /> : <Loginform />} 
         </div>
 
         {/* Login/Register */}
