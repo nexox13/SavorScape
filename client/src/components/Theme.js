@@ -67,7 +67,7 @@ const Theme = ({ currentTheme, darkTheme, handleThemeToggle }) => {
         </label>
       </div>
 
-      <div className="mt-4 flex justify-around bg-white rounded-lg shadow px-4 py-2">
+      <div className=" flex justify-around bg-white rounded-lg shadow px-4 py-2">
         {colors.map(({ name, color, borderColor }) => (
           <button
             key={name}
