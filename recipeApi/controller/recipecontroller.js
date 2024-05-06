@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Recipe = require('../model/recipe');
+const keycloak = require('../config/keycloak.js').getKeycloak();
 
 router.get('/', async (req, res) => {
   try {
@@ -32,7 +33,7 @@ router.get('/:name', async (req, res) => {
 });
 
 // POST: Neues Rezept hinzufügen
-router.post('/', async (req, res) => {
+router.post('/', keycloak.protect(), async (req, res) => {
   const recipe = new Recipe({
     country: req.body.country,
     title: req.body.title,
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT: Rezept bearbeiten
-router.put('/:id', async (req, res) => {
+router.put('/:id', keycloak.protect(), async (req, res) => {
   try {
     const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updatedRecipe);
@@ -62,7 +63,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE: Rezept löschen
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', keycloak.protect(), async (req, res) => {
   try {
     await Recipe.findByIdAndDelete(req.params.id);
     res.json({ message: 'Rezept gelöscht' });
