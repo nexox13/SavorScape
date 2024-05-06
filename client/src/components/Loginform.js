@@ -7,6 +7,9 @@ function Loginform() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
+  const [wrongLogin, setWrongLogin] = useState(0)
+  // Implement SSED Delay for wrong login
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };

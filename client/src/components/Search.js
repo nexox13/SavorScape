@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../contexts/AppContext';
 
 import '../index.css';
@@ -7,6 +7,36 @@ function Search() {
   const { setSelectedCountry, setSearchedRecipe, setSearchSubmit } = useAppContext();
   const [selectedCountryInput, setSelectedCountryInput] = useState('');
   const [searchedRecipeInput, setSearchedRecipeInput] = useState('');
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('country.csv');
+        const data = await response.text();
+        const parsedData = parseCSVData(data);
+        setCountries(parsedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Run once on component mount
+
+  const parseCSVData = (csvData) => {
+    const lines = csvData.trim().split('\n');
+    const countriesData = lines.map((line) => {
+      const [id, value] = line.split(',');
+      if (value === undefined) {
+        console.warn('Skipping line:', line);
+        return null; // Skip this line if value is undefined
+      }
+      return { label: value.trim().replace(/"/g, ''), value: id.trim() };
+    }).filter(Boolean); // Filter out null values
+    return countriesData;
+  };
+  
 
   const handleSelectCountryChange = (event) => {
     setSelectedCountryInput(event.target.value);
@@ -32,16 +62,6 @@ function Search() {
     }
   };
 
-  const countries = [
-    { label: 'United States', value: 'US', flag: '🇺🇸' },
-    { label: 'United Kingdom', value: 'GB', flag: '🇬🇧' },
-    { label: 'Canada', value: 'CA', flag: '🇨🇦' },
-    { label: 'Australia', value: 'AU', flag: '🇦🇺' },
-    { label: 'Germany', value: 'DE', flag: '🇩🇪' },
-    { label: 'France', value: 'FR', flag: '🇫🇷' },
-    // Add Get-Mapping for Collecting countries out of MongoDB
-  ];
-
   return (
     <div className="p-0.5 h-14 bg-white rounded-2xl opacity-100">
       <form onSubmit={handleSubmit} className='form-container'>
@@ -52,9 +72,9 @@ function Search() {
           style={{ textAlignLast: 'center' }} 
         >
           <option value="" disabled>Select country</option>
-          {countries.map((country) => (
-            <option key={country.label} value={country.label} className="hover:cursor-pointer bg-white text-center">
-              {country.flag} {country.value}
+          {countries.map((country, index) => (
+            <option key={index} value={country.value} className="hover:cursor-pointer bg-white text-center">
+              {country.label}
             </option>
           ))}
         </select>

@@ -17,7 +17,7 @@ function Login() {
 
   return (
     <div>
-      <div className="bg-white rounded-xl p-4 h-auto flex flex-col justify-center items-center">
+      <div className="bg-white rounded-xl p-4 mt-4 h-auto flex flex-col justify-center items-center">
         {/* Header */}
         <div className="font-mono text-xl">Login ~ Register</div>
         
