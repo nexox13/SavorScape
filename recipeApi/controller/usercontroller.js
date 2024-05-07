@@ -1,32 +1,35 @@
 const express = require('express');
 const User = require('../model/user.js');
-const keycloak = require('../config/keycloak.js').getKeycloak();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { hashPassword } = require('../login/hashPass.js');
+const bcrypt = require('bcryptjs');
  
 var router = express.Router();
 
 //Create a user
-router.post('/', function(req,res){
-    hashPassword(10, req.body.password)
-    .then((hash) => {
+router.post('/', async (req,res) => {
+    try {
+        const pswd = req.body.password;
+        const saltrounds = 10;
+        console.log(pswd)
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hash = await bcrypt.hash(pswd, salt);
+        console.log(salt,hash)
         const user = new User({
             username: req.body.username,
             password: hash
         });
         user.save()
-        .then(data => {
-            res.send(data);
-        }).catch(err => {
-            res.status(500).send({message: `Error cr eating user ${err.message}`});
-        });
-    })
-    .catch(err => {
-        console.error('Error hashing password:', err);
-        res.status(500).send({message: `Error hashing password: ${err.message}`});
-    });
+            .then(data => {
+                res.status(200).json({ message: 'User created successfully', data });
+            })
+            .catch(err => {
+                res.status(500).json({ message: `Error creating user ${err.message}` });
+            });
+    } catch (error) {
+        console.error('Fehler beim Verschlüsseln des Passworts:', error);
+        res.status(500).json({ error: 'Fehler beim Verschlüsseln des Passworts' });
+    }
 });
+
 
 //Find a user
 router.get('/:id', function(req,res){
@@ -53,8 +56,8 @@ router.put('/:id', function(req,res){
     
     User.findOneAndUpdate({userid:req.body.userid}, {
         userid:req.body.userid,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
+        username: req.body.username,
+        password: req.body.password
     }, {new: true})
     .then(user => {
         if(!user) {
