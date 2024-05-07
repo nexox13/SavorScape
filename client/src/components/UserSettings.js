@@ -70,7 +70,7 @@ function UserSettings() {
           </div>  
           
           {/* Delete Account */}
-          <div className={`mt-4 underline text-black font-bold cursor-pointer border rounded-xl border-black p-2 w-2/4 flex justify-center hover:bg-blue-500 transition-all duration-500 ease-linear`} onClick={handleDeleteAccount}>
+          <div className={`mt-4 underline text-black font-bold cursor-pointer rounded-xl border border-black p-2 w-2/4 flex justify-center ${colorTheme}`} onClick={handleDeleteAccount}>
             Delete Account
           </div>
 

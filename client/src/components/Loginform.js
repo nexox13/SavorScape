@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAppContext } from '../contexts/AppContext';
 
 function Loginform() {
   const [showPassword, setShowPassword] = useState(false);
@@ -6,6 +7,9 @@ function Loginform() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { setLoggedIn, setJsWebToken } = useAppContext();
 
   const [wrongLogin, setWrongLogin] = useState(0)
   // Implement SSED Delay for wrong login
@@ -22,10 +26,10 @@ function Loginform() {
     setPassword(event.target.value);
   };
   
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = {};
-    // Perform validation
     if (!username.trim()) {
       errors.username = 'Username is required';
     }
@@ -34,16 +38,35 @@ function Loginform() {
     }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      // Submit the form
-      console.log('Form submitted:', { username, password });
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setLoggedIn(true);
+          setJsWebToken(data.token);
+        } else {
+          throw new Error('Login failed');
+        }
+      } catch (error) {
+        console.error('Error logging in:', error);
+        setErrorMessage('Wrong User or Password');
+      }
     }
   };
-
 
   return (
     <form className="form_main" action="">
       <div id="ContentContainer" className="mt-4">
-
+        <div id="messageContainer" className="font-mono text text-red mb-2">
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
         
         <div className="relative">
         <input

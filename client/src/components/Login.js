@@ -9,7 +9,7 @@ function Login() {
   const { colorTheme, loggedIn, setLoggedIn,} = useAppContext();
   const [isRegistering, setIsRegistering] = useState(false);
 
-  setLoggedIn(true);
+  // setLoggedIn(false); //Switching between LoggedIn and LoggedOut
 
   const handleRegisterClick = () => {
     setIsRegistering(true);
