@@ -22,6 +22,8 @@ export const AppContextProvider = ({
     const [colorTheme, setColorTheme] = useState('bg-purple')
 
     const [loggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
+    const [userPassword, setUserPassword] = useState('');
 
     return ( 
     <AppContext.Provider value = {
@@ -48,7 +50,11 @@ export const AppContextProvider = ({
                 setColorTheme,
 
                 loggedIn,
-                setLoggedIn
+                setLoggedIn,
+                username,
+                setUsername,
+                userPassword,
+                setUserPassword
             }
         } >
         {

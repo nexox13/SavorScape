@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import Loginform from './Loginform';
 import Registerform from './Registerform';
+import UserSettings from './UserSettings'
+
 import { useAppContext } from '../contexts/AppContext';
 
 function Login() {
-  const { colorTheme } = useAppContext();
+  const { colorTheme, loggedIn, setLoggedIn,} = useAppContext();
   const [isRegistering, setIsRegistering] = useState(false);
+
+  setLoggedIn(true);
 
   const handleRegisterClick = () => {
     setIsRegistering(true);
@@ -17,7 +21,10 @@ function Login() {
 
   return (
     <div>
-      <div className="bg-white rounded-xl p-4 mt-4 h-auto flex flex-col justify-center items-center">
+      {loggedIn ? ( 
+        <UserSettings/>
+      ):(
+        <div className="bg-white rounded-xl p-4 mt-4 h-auto flex flex-col justify-center items-center">
         {/* Header */}
         <div className="font-mono text-xl">Login ~ Register</div>
         
@@ -35,6 +42,7 @@ function Login() {
           )}
         </div>
       </div>
+      )}
     </div>
   );
 }
