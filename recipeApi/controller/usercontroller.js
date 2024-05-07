@@ -10,7 +10,7 @@ router.post('/', async (req,res) => {
         const pswd = req.body.password;
         const saltrounds = 10;
         console.log(pswd)
-        const salt = await bcrypt.genSalt(saltRounds);
+        const salt = await bcrypt.genSalt(saltrounds);
         const hash = await bcrypt.hash(pswd, salt);
         console.log(salt,hash)
         const user = new User({
@@ -51,13 +51,19 @@ router.get('/:id', function(req,res){
 
 
 //Update a user
-router.put('/:id', function(req,res){
+router.put('/:id', async (req,res) => {
     // Find note and update it with the request body
+        const pswd = req.body.password;
+        const saltrounds = 10;
+        console.log(pswd)
+        const salt = await bcrypt.genSalt(saltrounds);
+        const hash = await bcrypt.hash(pswd, salt);
+        console.log(salt,hash)
     
     User.findOneAndUpdate({userid:req.body.userid}, {
         userid:req.body.userid,
         username: req.body.username,
-        password: req.body.password
+        password: hash
     }, {new: true})
     .then(user => {
         if(!user) {
