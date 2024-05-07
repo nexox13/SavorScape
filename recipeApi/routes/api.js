@@ -12,7 +12,7 @@ loadDb();
 router.use('/register', usercontroller);
 
 // Mount login routes
-// router.use('/login', logincontroller);
+router.use('/login', logincontroller);
 
 // Mount recipe routes
 router.use('/recipe', recipecontroller);

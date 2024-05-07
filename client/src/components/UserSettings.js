@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
 
 function UserSettings() {
-    const { username, userPassword, handleDeleteAccount } = useAppContext();
+    const { colorTheme, username, userPassword, handleDeleteAccount } = useAppContext();
 
     return (
       <div className="bg-white mt-4 h-auto rounded-xl p-4">
@@ -70,9 +70,10 @@ function UserSettings() {
           </div>  
           
           {/* Delete Account */}
-          <div className="mt-4 underline text-red font-bold cursor-pointer" onClick={handleDeleteAccount}>
+          <div className={`mt-4 underline text-black font-bold cursor-pointer border rounded-xl border-black p-2 w-2/4 flex justify-center hover:bg-blue-500 transition-all duration-500 ease-linear`} onClick={handleDeleteAccount}>
             Delete Account
           </div>
+
         </section>
       </div>
     );
