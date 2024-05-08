@@ -44,7 +44,7 @@ function Registerform() {
   
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await fetch('http://10.115.1.14:3001/api/register/', {
+        const response = await fetch('http://10.115.1.14:3001/register/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ function Registerform() {
         }
       } catch (error) {
         console.error('Error logging in:', error);
-        setErrorMessage('Wrong User or Password');
+        setErrorMessage('Failed to Register, please try again later');
       }
   
       console.log('Form submitted:', { username, password });

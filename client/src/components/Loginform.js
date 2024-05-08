@@ -14,6 +14,10 @@ function Loginform() {
   const [wrongLogin, setWrongLogin] = useState(0)
   // Implement SSED Delay for wrong login
 
+  setLoggedIn(true);
+  setSettingsUsername("TestUser");
+  setSettingsUserPassword("TestPassword");
+  
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -39,7 +43,7 @@ function Loginform() {
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await fetch('http://10.115.1.14:3001/api/login/', {
+        const response = await fetch('http://10.115.1.14:3001/login/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -6,8 +6,7 @@ import UserSettings from './UserSettings'
 import { useAppContext } from '../contexts/AppContext';
 
 function Login() {
-  const { colorTheme, loggedIn, setLoggedIn,} = useAppContext();
-  const [isRegistering, setIsRegistering] = useState(false);
+  const { colorTheme, loggedIn, setLoggedIn, isRegistering, setIsRegistering} = useAppContext();
 
   // setLoggedIn(false); //Switching between LoggedIn and LoggedOut
 

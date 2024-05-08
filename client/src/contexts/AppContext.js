@@ -21,6 +21,7 @@ export const AppContextProvider = ({
     const [mapTheme, setMapTheme] = useState(localStorage.getItem('mapTheme') || 'mapbox://styles/mapbox/dark-v11');
     const [colorTheme, setColorTheme] = useState('bg-purple')
 
+    const [isRegistering, setIsRegistering] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [settingsUserPassword, setSettingsUserPassword] = useState('');
     const [settingsUsername, setSettingsUsername] = useState('');
@@ -52,6 +53,8 @@ export const AppContextProvider = ({
 
                 loggedIn,
                 setLoggedIn,
+                isRegistering,
+                setIsRegistering,
                 jsWebToken,
                 setJsWebToken,
                 settingsUsername,
