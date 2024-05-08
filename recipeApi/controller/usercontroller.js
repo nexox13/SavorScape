@@ -19,14 +19,14 @@ router.post('/', async (req,res) => {
         });
         user.save()
             .then(data => {
-                res.status(200).json({ message: 'User created successfully', data });
+                res.status(200).json({ message: 'User created successfully 😍', data });
             })
             .catch(err => {
-                res.status(500).json({ message: `Error creating user ${err.message}` });
+                res.status(500).json({ message: `Error creating user 🫨 ${err.message}` });
             });
     } catch (error) {
-        console.error('Fehler beim Verschlüsseln des Passworts:', error);
-        res.status(500).json({ error: 'Fehler beim Verschlüsseln des Passworts' });
+        console.error('Fehler beim Verschlüsseln des Passworts 🫨:', error);
+        res.status(500).json({ error: 'Fehler beim Verschlüsseln des Passworts 🫨' });
     }
 });
 
@@ -37,13 +37,13 @@ router.get('/:id', function(req,res){
     .then(user => {
         if(!user) {
             return res.status(404).send({
-                message: "User not found with id " + req.body.userid
+                message: "User not found 🫨 with id " + req.body.userid
             });            
         }
         res.send(user);
     }).catch(err => {         
         return res.status(500).send({
-            message: `Error retrieving user : ${err.message}`
+            message: `Error retrieving user 🫨 : ${err.message}`
         });
     });
     
@@ -68,13 +68,13 @@ router.put('/:id', async (req,res) => {
     .then(user => {
         if(!user) {
             return res.status(404).send({
-                message: "User not found"
+                message: "User not found 🫨"
             });
         }
         res.send(user);
     }).catch(err => {        
         return res.status(500).send({
-            message: `Error updating user: ${err.message} `
+            message: `Error updating user 🫨: ${err.message} `
         });
     });
 });
@@ -85,13 +85,13 @@ router.delete('/:id',function (req,res){
     .then(user => {
         if(!user) {
             return res.status(404).send({
-                message: "User not found "
+                message: "User not found 🫨"
             });
         }
-        res.send({message: "User deleted successfully!"});
+        res.send({message: "User deleted successfully! 😍"});
     }).catch(err => {         
         return res.status(500).send({
-            message: "Could not delete user with id " + req.params.userid
+            message: "Could not delete user with id 🫨" + req.params.userid
         });
     });
 });

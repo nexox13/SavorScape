@@ -66,7 +66,7 @@ router.put('/:id', keycloak.protect(), async (req, res) => {
 router.delete('/:id', keycloak.protect(), async (req, res) => {
   try {
     await Recipe.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Rezept gelöscht' });
+    res.json({ message: 'Rezept gelöscht 😍' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
