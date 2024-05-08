@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
 
 function UserSettings() {
-    const { colorTheme, username, userPassword, handleDeleteAccount } = useAppContext();
+    const { colorTheme, settingsUsername, settingsUserPassword, handleDeleteAccount } = useAppContext();
 
     return (
       <div className="bg-white mt-4 h-auto rounded-xl p-4">
@@ -11,7 +11,7 @@ function UserSettings() {
           {/* Username */}
           <div className="border-b-2 border-gray-300 pb-2 mb-4 flex justify-between items-center mr-6">
             <div className="text-lg font-semibold">Username:</div>
-            <div className="">{username}</div>
+            <div className="">{settingsUsername}</div>
             <div className="flex items-center">
                 <div className="ml-2">
                 <svg
@@ -42,7 +42,7 @@ function UserSettings() {
           {/* Password */}
           <div className="border-b-2 border-gray-300 pb-2 mb-4 mr-6 flex justify-between items-center">
             <div className="text-lg font-semibold">Password:</div>
-            <div className=''>{userPassword}</div>
+            <div className=''>{settingsUserPassword}</div>
             <div className="flex items-center">
                 <div className="ml-2">
                 <svg

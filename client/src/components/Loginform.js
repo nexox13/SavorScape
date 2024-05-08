@@ -9,7 +9,7 @@ function Loginform() {
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setLoggedIn, setJsWebToken } = useAppContext();
+  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword  } = useAppContext();
 
   const [wrongLogin, setWrongLogin] = useState(0)
   // Implement SSED Delay for wrong login
@@ -39,7 +39,7 @@ function Loginform() {
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await fetch('/', {
+        const response = await fetch('http://10.115.1.14:3001/api/login/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -51,6 +51,8 @@ function Loginform() {
           console.log(data);
           setLoggedIn(true);
           setJsWebToken(data.token);
+          setSettingsUsername(username);
+          setSettingsUserPassword(password);
         } else {
           throw new Error('Login failed');
         }

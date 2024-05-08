@@ -22,8 +22,8 @@ export const AppContextProvider = ({
     const [colorTheme, setColorTheme] = useState('bg-purple')
 
     const [loggedIn, setLoggedIn] = useState(false);
-    const [userPassword, setUserPassword] = useState('');
-    const [username, setUsername] = useState('');
+    const [settingsUserPassword, setSettingsUserPassword] = useState('');
+    const [settingsUsername, setSettingsUsername] = useState('');
     const [jsWebToken, setJsWebToken] = useState('');
 
     return ( 
@@ -52,12 +52,12 @@ export const AppContextProvider = ({
 
                 loggedIn,
                 setLoggedIn,
-                username,
                 jsWebToken,
                 setJsWebToken,
-                setUsername,
-                userPassword,
-                setUserPassword
+                settingsUsername,
+                setSettingsUsername,
+                settingsUserPassword,
+                setSettingsUserPassword
             }
         } >
         {

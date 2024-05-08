@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useAppContext } from '../contexts/AppContext';
 
 function Registerform() {
   const [showPassword, setShowPassword] = useState(false);
 
+  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword  } = useAppContext();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -19,7 +23,7 @@ function Registerform() {
     setPassword(event.target.value);
   };
   
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = {};
   
@@ -37,18 +41,46 @@ function Registerform() {
     }
   
     setErrors(errors);
-    
+  
     if (Object.keys(errors).length === 0) {
-      // Submit the form
+      try {
+        const response = await fetch('http://10.115.1.14:3001/api/register/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setLoggedIn(true);
+          // setJsWebToken(data.token);
+          setSettingsUsername(username);
+          setSettingsUserPassword((prevPassword) => {
+            return prevPassword || password;
+          });
+        } else {
+          throw new Error('Login failed');
+        }
+      } catch (error) {
+        console.error('Error logging in:', error);
+        setErrorMessage('Wrong User or Password');
+      }
+  
       console.log('Form submitted:', { username, password });
     }
   };
+  
 
 
   return (
     <form className="form_main" action="">
       <div id="ContentContainer" className="mt-4">
 
+        <div id="messageContainer" className="font-mono text text-red mb-2">
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
         
         <div className="relative">
         <input
