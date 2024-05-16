@@ -21,6 +21,7 @@ export const AppContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [settingsUserPassword, setSettingsUserPassword] = useState("");
   const [settingsUsername, setSettingsUsername] = useState("");
+  const [userId, setUserId] = useState("");
   const [jsWebToken, setJsWebToken] = useState("");
 
   return (
@@ -51,6 +52,8 @@ export const AppContextProvider = ({ children }) => {
         setLoggedIn,
         isRegistering,
         setIsRegistering,
+        userId,
+        setUserId,
         jsWebToken,
         setJsWebToken,
         settingsUsername,
