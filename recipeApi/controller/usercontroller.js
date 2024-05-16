@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
 
 //Find a user
 router.get('/:id', function(req,res){
-    User.find({userid:req.body.id})
+    User.findOne({userid:req.body.id})
     .then(user => {
         if(!user) {
             return res.status(404).send({
