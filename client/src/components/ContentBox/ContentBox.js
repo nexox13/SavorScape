@@ -10,7 +10,7 @@ function ContentBox() {
   useEffect(() => {
     const fetchRecipes = async () => {
         try {
-          const response = await fetch(`http://10.115.1.14:3001//recipes?country=${selectedCountry}&search=${searchedRecipe}`);
+          const response = await fetch(`http://10.115.1.14:3001/recipes?country=${selectedCountry}&search=${searchedRecipe}`);
           const data = await response.json();
           setRecipes(data);
         } catch (error) {

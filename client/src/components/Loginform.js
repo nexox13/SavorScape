@@ -9,14 +9,10 @@ function Loginform() {
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword  } = useAppContext();
+  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword, setUserId} = useAppContext();
 
   const [wrongLogin, setWrongLogin] = useState(0)
   // Implement SSED Delay for wrong login
-
-  setLoggedIn(true);
-  setSettingsUsername("TestUser");
-  setSettingsUserPassword("TestPassword");
   
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -57,6 +53,7 @@ function Loginform() {
           setJsWebToken(data.token);
           setSettingsUsername(username);
           setSettingsUserPassword(password);
+          setUserId(data.userObject._id);
         } else {
           throw new Error('Login failed');
         }
