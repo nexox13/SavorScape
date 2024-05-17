@@ -10,21 +10,25 @@ var router = express.Router();
 
 //login
 router.post('/', async (req, res) => {
-    const user = await User.findOne({ username: req.body.username });
+    try{
+        const user = await User.findOne({ username: req.body.username });
     
-    const userAllowed = await bcrypt.compare(req.body.password, user.password);
+        const userAllowed = await bcrypt.compare(req.body.password, user.password);
 
-    if (userAllowed) {
-        const userObject = user.toObject();
-        const payload = {
-            id: userObject._id,
-            username: userObject.username,
-            password: userObject.password
-        };
-        const token = jwt.sign(payload, privateKey, { expiresIn: '1h' });
-        res.status(200).json({ message: 'User logged in successfully 😍', token, userObject });
-    } else {
-        res.send('No user found or invalid password 🫨');
+        if (userAllowed) {
+            const userObject = user.toObject();
+            const payload = {
+                id: userObject._id,
+                username: userObject.username,
+                password: userObject.password
+            };
+            const token = jwt.sign(payload, privateKey, { expiresIn: '1h' });
+            res.status(200).json({ message: 'User logged in successfully 😍', token, userObject });
+        } else {
+            res.send('No user found or invalid password 🫨');
+        }
+    }catch {
+        res.status(500).json({ error: 'Error logging in 🫨' });
     }
 });
 
