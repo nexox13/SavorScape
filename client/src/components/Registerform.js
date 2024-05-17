@@ -4,7 +4,7 @@ import { useAppContext } from '../contexts/AppContext';
 function Registerform() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword  } = useAppContext();
+  const { setLoggedIn, setJsWebToken, setUserId, setSettingsUsername, setSettingsUserPassword  } = useAppContext();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -34,12 +34,7 @@ function Registerform() {
   
     if (!password.trim()) {
       errors.password = 'Password is required';
-    } else if (password.length < 8) {
-      errors.password = 'Password must be at least 8 characters long';
-    } else if (!/[A-Z]/.test(password)) {
-      errors.password = 'Password must contain at least one capital letter';
     }
-  
     setErrors(errors);
   
     if (Object.keys(errors).length === 0) {
@@ -55,8 +50,10 @@ function Registerform() {
           const data = await response.json();
           console.log(data);
           setLoggedIn(true);
-          // setJsWebToken(data.token);
+          setJsWebToken(data.token);
+          setUserId(data._id);
           setSettingsUsername(username);
+          console.log(username)
           setSettingsUserPassword((prevPassword) => {
             return prevPassword || password;
           });
