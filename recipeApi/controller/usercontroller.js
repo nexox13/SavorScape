@@ -33,11 +33,11 @@ router.post('/', async (req,res) => {
 
 //Find a user
 router.get('/:id', function(req,res){
-    User.findOne({userid:req.body.id})
+    User.findOne({_id:req.params.id})
     .then(user => {
         if(!user) {
             return res.status(404).send({
-                message: "User not found 🫨 with id " + req.body.userid
+                message: "User not found 🫨 with id " + req.params.id
             });            
         }
         res.send(user);
@@ -49,19 +49,14 @@ router.get('/:id', function(req,res){
     
 });
 
-
 //Update a user
 router.put('/:id', async (req,res) => {
-    // Find note and update it with the request body
-        const pswd = req.body.password;
-        const saltrounds = 10;
-        console.log(pswd)
-        const salt = await bcrypt.genSalt(saltrounds);
-        const hash = await bcrypt.hash(pswd, salt);
-        console.log(salt,hash)
-    
-    User.findOneAndUpdate({userid:req.body.userid}, {
-        userid:req.body.userid,
+    const pswd = req.body.password;
+    const saltrounds = 10;
+    const salt = await bcrypt.genSalt(saltrounds);
+    const hash = await bcrypt.hash(pswd, salt);
+
+    User.findOneAndUpdate({_id:req.params.id}, {
         username: req.body.username,
         password: hash
     }, {new: true})
@@ -81,7 +76,7 @@ router.put('/:id', async (req,res) => {
 
 //Delete a user
 router.delete('/:id',function (req,res){
-    User.findOneAndDelete({userid:req.params.id})
+    User.findOneAndDelete({_id:req.params.id})
     .then(user => {
         if(!user) {
             return res.status(404).send({
