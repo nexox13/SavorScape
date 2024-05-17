@@ -61,7 +61,6 @@ function UserSettings() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-                username: settingsUsername,
                 password: settingsUserPassword
             }),
         });
@@ -95,9 +94,9 @@ function UserSettings() {
       </header>
       <section className="mt-4">
         {/* Username */}
-        <div className="border-b-2 border-gray-300 pb-2 mb-4 flex justify-between items-center mr-6">
+        <div className="border-b-2 border-gray-300 pb-2 mb-4 flex justify-arround items-center mr-6">
           <div className="text-lg font-semibold">Username:</div>
-          <div className="border border-black pr-1 pl-1 rounded">
+          <div className="border border-black pr-1 pl-1  ml-6">
             {settingsUsername}
           </div>
         </div>
