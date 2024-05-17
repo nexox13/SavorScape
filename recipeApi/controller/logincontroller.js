@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
             password: userObject.password
         };
         const token = jwt.sign(payload, privateKey, { expiresIn: '1h' });
-        res.status(200).json({ message: 'User logged in successfully 😍', token });
+        res.status(200).json({ message: 'User logged in successfully 😍', token, userObject });
     } else {
         res.send('No user found or invalid password 🫨');
     }
