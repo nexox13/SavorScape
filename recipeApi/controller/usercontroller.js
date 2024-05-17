@@ -9,10 +9,8 @@ router.post('/', async (req,res) => {
     try {
         const pswd = req.body.password;
         const saltrounds = 10;
-        console.log(pswd)
         const salt = await bcrypt.genSalt(saltrounds);
         const hash = await bcrypt.hash(pswd, salt);
-        console.log(salt,hash)
         const user = new User({
             username: req.body.username,
             password: hash
@@ -57,7 +55,6 @@ router.put('/:id', async (req,res) => {
     const hash = await bcrypt.hash(pswd, salt);
 
     User.findOneAndUpdate({_id:req.params.id}, {
-        username: req.body.username,
         password: hash
     }, {new: true})
     .then(user => {
