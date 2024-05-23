@@ -20,14 +20,8 @@ function AddRecipe() {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch('../country.csv');
-        const reader = response.body.getReader();
-        const result = await reader.read();
-        const decoder = new TextDecoder('utf-8');
-        const csv = decoder.decode(result.value);
-        const parsedData = Papa.parse(csv, { header: true }).data;
-        console.log(parsedData); // Log parsed data
-        setCountriesList(parsedData.map((row) => row.country)); // Changed from row.value to row.country
+        const response = await fetch('http://10.115.1.14:3001/login/');
+
       } catch (error) {
         console.error('Error fetching or parsing countries:', error);
       }
