@@ -1,5 +1,5 @@
 db = db.getSiblingDB('savorscapeDB')
-db.country.insertMany([
+db.countries.insertMany([
     {name: 'Afghanistan', code: 'AF'}, 
     {name: 'Åland Islands', code: 'AX'}, 
     {name: 'Albania', code: 'AL'}, 
@@ -244,3 +244,13 @@ db.country.insertMany([
     {name: 'Zambia', code: 'ZM'}, 
     {name: 'Zimbabwe', code: 'ZW'}
 ]);
+
+db.users.insertMany([
+    {
+        "username": "admin",
+        "password": "$2b$10$qOuYqJKU8u.G7Br8V7rnNuakhNMXVDpAyukhw/2CTqkIujwFojyXq"
+    },{
+        "username": "test",
+        "password": "$2b$10$I0GvxAlp5CCTCFVJ6RmiROX.YHRRhOSuYUWeuoYG72Za2kxL87blm"
+    }
+])
