@@ -171,7 +171,7 @@ db.countries.insertMany([
     {name: 'Panama', code: 'PA'}, 
     {name: 'Papua New Guinea', code: 'PG'}, 
     {name: 'Paraguay', code: 'PY'}, 
-    {name: 'Peru', code: 'PE'}, 
+    {name: 'Peru', code: 'PE'},
     {name: 'Philippines', code: 'PH'}, 
     {name: 'Pitcairn', code: 'PN'}, 
     {name: 'Poland', code: 'PL'}, 
