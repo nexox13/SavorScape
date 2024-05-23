@@ -11,21 +11,44 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET: Alle Rezepte abrufen Land
-router.get('/:country', async (req, res) => {
+// GET: Alle Rezepte abrufen Country | Title
+router.get('/country/:country', async (req, res) => {
+  console.log(req.params.country)
   try {
-    const recipes = await Recipe.find({land: req.body.country})
-    res.json(recipes);
+    const recipes = await Recipe.find({country: req.params.country})
+    if (recipes.length != 0) {
+      return res.status(200).json({ message: 'Rezept gefunden 😍', recipes });
+    }else{
+      return res.status(404).json({ message: 'Rezept nicht gefunden ' });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// GET: Rezepte abrufen name
-router.get('/:name', async (req, res) => {
+// GET: Rezepte abrufen name & country
+router.get('/name/:name', async (req, res) => {
   try {
-    const recipes = await Recipe.find({name: req.body.name})
-    res.json(recipes);
+    const recipes = await Recipe.find({name: req.params.name})
+    if (recipes.length != 0) {
+      return res.status(200).json({ message: 'Rezept gefunden 😍', recipes });
+    }else{
+      return res.status(404).json({ message: 'Rezept nicht gefunden ' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET: Rezept abrufen search
+router.get('/search/:country/:name', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({title: req.params.name, country: req.params.country})
+    if (recipes.length != 0) {
+      return res.status(200).json({ message: 'Rezept gefunden 😍', recipes });
+    }else{
+      return res.status(404).json({ message: 'Rezept nicht gefunden ' });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -36,8 +59,6 @@ router.post('/', async (req, res) => {
   const recipe = new Recipe({
     country: req.body.country,
     title: req.body.title,
-    // image: req.body.image,
-    preparationtime: req.body.preparationtime,
     difficulty: req.body.difficulty,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
