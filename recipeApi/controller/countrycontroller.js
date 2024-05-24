@@ -25,7 +25,7 @@ router.get('/:country', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const countries = await Country.find({})
-        res.json(countries);
+        res.status(200).json(countries);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

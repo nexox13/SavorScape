@@ -23,8 +23,7 @@ router.post('/', async (req,res) => {
                 res.status(500).json({ message: `Error creating user 🫨 ${err.message}` });
             });
     } catch (error) {
-        console.error('Fehler beim Verschlüsseln des Passworts 🫨:', error);
-        res.status(500).json({ error: 'Fehler beim Verschlüsseln des Passworts 🫨' });
+        res.status(500).json({ message: 'Fehler beim Verschlüsseln des Passworts 🫨', error });
     }
 });
 
@@ -34,13 +33,11 @@ router.get('/:id', function(req,res){
     User.findOne({_id:req.params.id})
     .then(user => {
         if(!user) {
-            return res.status(404).send({
-                message: "User not found 🫨 with id " + req.params.id
-            });            
+            return res.status(404).json({ message: "User not found 🫨 with id " + req.params.id });            
         }
-        res.send(user);
+        res.status(200).json(user);
     }).catch(err => {         
-        return res.status(500).send({
+        return res.status(500).json({
             message: `Error retrieving user 🫨 : ${err.message}`
         });
     });
@@ -59,13 +56,13 @@ router.put('/:id', async (req,res) => {
     }, {new: true})
     .then(user => {
         if(!user) {
-            return res.status(404).send({
+            return res.status(404).json({
                 message: "User not found 🫨"
             });
         }
-        res.send(user);
+        res.status(200).json(user);
     }).catch(err => {        
-        return res.status(500).send({
+        return res.status(500).json({
             message: `Error updating user 🫨: ${err.message} `
         });
     });
@@ -76,14 +73,14 @@ router.delete('/:id',function (req,res){
     User.findOneAndDelete({_id:req.params.id})
     .then(user => {
         if(!user) {
-            return res.status(404).send({
+            return res.status(404).json({
                 message: "User not found 🫨"
             });
         }
-        res.send({message: "User deleted successfully! 😍"});
+        res.status(200).json({message: "User deleted successfully! 😍"});
     }).catch(err => {         
-        return res.status(500).send({
-            message: "Could not delete user with id 🫨" + req.params.userid
+        return res.status(500).json({
+            message: "Could not delete user with id 🫨" + req.params.userid, err
         });
     });
 });

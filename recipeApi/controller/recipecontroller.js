@@ -5,7 +5,7 @@ const Recipe = require('../model/recipe');
 router.get('/', async (req, res) => {
   try {
     const recipes = await Recipe.find({})
-    res.json(recipes);
+    res.status(200).json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updatedRecipe);
+    res.status(200).json(updatedRecipe);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -87,7 +87,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Recipe.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Rezept gelöscht 😍' });
+    res.status(200).json({ message: 'Rezept gelöscht 😍' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
