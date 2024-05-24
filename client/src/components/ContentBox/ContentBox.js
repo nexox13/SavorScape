@@ -6,18 +6,27 @@ function ContentBox() {
   const { colorTheme, searchSubmit, selectedCountry, searchedRecipe } = useAppContext();
   const [recipes, setRecipes] = useState([]);
 
-  // Fetch recipes based on selectedCountry and searchedRecipe on component mount or update
   useEffect(() => {
     const fetchRecipes = async () => {
-        try {
-          const response = await fetch(`http://10.115.1.14:3001/recipes?country=${selectedCountry}&search=${searchedRecipe}`);
-          const data = await response.json();
-          setRecipes(data);
-        } catch (error) {
-          console.error("Error fetching recipes:", error);
-          // Display user-friendly error message here
-        }
-      };
+      let url = 'http://10.115.1.14:3001/recipe';
+      
+      if (selectedCountry && searchedRecipe) {
+        url += `/search?country=${selectedCountry}&name=${searchedRecipe}`;
+      } else if (selectedCountry) {
+        url += `/${selectedCountry}`;
+      } else if (searchedRecipe) {
+        url += `/${searchedRecipe}`;
+      }
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setRecipes(data);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+        // Display user-friendly error message here
+      }
+    };
 
     if (searchSubmit) {
       fetchRecipes();
@@ -31,10 +40,10 @@ function ContentBox() {
           <ContentBoxHeader />
           <div className="grid grid-cols-2 gap-4">
             {recipes.map((recipe) => (
-              <div key={recipe._id} className="recipe-card">
+              <div key={recipe._id} className="recipe-card bg-yellow">
                 {/* Display recipe information here */}
-                <img src={recipe.imageUrl} alt={recipe.title} />
                 <h3>{recipe.title}</h3>
+                <p>{recipe.country}</p>
               </div>
             ))}
           </div>
