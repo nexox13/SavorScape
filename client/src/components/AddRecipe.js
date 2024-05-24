@@ -2,33 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useAppContext } from '../contexts/AppContext';
 import Icon from './Icon';
-import * as Papa from 'papaparse';
 
 function AddRecipe() {
-  const { colorTheme } = useAppContext();
+  const { colorTheme, loggedIn } = useAppContext();
 
   const [title, setTitle] = useState('');
   const [country, setCountry] = useState('');
-  const [countriesList, setCountriesList] = useState([]);
   const [ingredients, setIngredients] = useState([{ name: '', amount: '', unit: '' }]);
   const [instructions, setInstructions] = useState('');
-  const [difficulty, setDifficulty] = useState(0); // Initial difficulty set to 0
+  const [difficulty, setDifficulty] = useState(0);
   const [errors, setErrors] = useState({});
+  const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
   const units = ['kg', 'g', 'l', 'ml'];
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch('http://10.115.1.14:3001/login/');
-
-      } catch (error) {
-        console.error('Error fetching or parsing countries:', error);
-      }
-    };
-  
-    fetchCountries();
-  }, []);
 
   const handleStarClick = (rating) => {
     setDifficulty(rating);
@@ -45,23 +31,40 @@ function AddRecipe() {
   };
 
   const removeIngredient = (index) => {
-    if(index != 0){
+    if (index !== 0) {
       const newIngredients = [...ingredients];
       newIngredients.splice(index, 1);
       setIngredients(newIngredients);
     }
-    
   };
 
-  const validateInputs = () => {
+  const validateCountry = async (country) => {
+    try {
+      const response = await fetch(`http://10.115.1.14:3001/countries/${country}`);
+      if (response.status === 200) {
+        console.log("Country exists in the database")
+        return true;
+      } else if (response.status === 404) {
+        return false;
+      }
+    } catch (error) {
+      console.error('Error validating country:', error);
+      return false;
+    }
+  };
+
+  const validateInputs = async () => {
     const errors = {};
     if (!title.trim()) {
       errors.title = 'Title is required';
     }
     if (!country.trim()) {
       errors.country = 'Country is required';
-    } else if (countriesList.length === 0 || !countriesList.map((country) => country.value).includes(country.trim())) {
-      errors.country = 'Invalid country';
+    } else {
+      const isValidCountry = await validateCountry(country.trim());
+      if (!isValidCountry) {
+        errors.country = 'Invalid country';
+      }
     }
     if (ingredients.some((ingredient) => !ingredient.name.trim() || !ingredient.amount.trim() || !ingredient.unit.trim())) {
       errors.ingredients = 'All ingredient fields are required';
@@ -72,7 +75,6 @@ function AddRecipe() {
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
-  
 
   const resetInput = () => {
     setTitle('');
@@ -82,17 +84,25 @@ function AddRecipe() {
     setDifficulty(0);
   };
 
-  const addRecipes = async () => {
-    if (!validateInputs()) {
+  const addRecipes = async (e) => {
+
+    if (!loggedIn) { // Check if the form can be submitted
+      setSubmitErrorMessage('Form submission is currently disabled, Login to submit a recipe');
       return;
     }
-    const url = `http://10.115.1.14:3001/recipe`;
+
+    e.preventDefault();
+    if (!(await validateInputs())) {
+      return;
+    }
+    const url = `http://10.115.1.14:3001/recipe/`;
     const recipeData = {
-      title,
       country,
+      title,
+      difficulty,
       ingredients,
       instructions,
-      difficulty,
+
     };
 
     try {
@@ -107,8 +117,8 @@ function AddRecipe() {
       if (!response.ok) {
         throw new Error('Failed to add recipe');
       }
-      if(response.ok){
-        resetInput()
+      if (response.ok) {
+        resetInput();
       }
 
       const responseData = await response.json();
@@ -178,6 +188,7 @@ function AddRecipe() {
               <input
                 className={`${colorTheme} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                 value={ingredient.amount}
+                type="number"
                 onChange={(e) => handleChange(index, 'amount', e.target.value)}
                 placeholder="Amount"
                 required
@@ -248,11 +259,15 @@ function AddRecipe() {
 
         <button
           className="mt-10 bg-black hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={() => addRecipes()}
+          onClick={(e) => addRecipes(e)}
         >
           Add Recipe
         </button>
+
       </div>
+
+      <div className='text-red mt-4'>{submitErrorMessage}</div>
+
     </span>
   );
 }

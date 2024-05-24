@@ -107,18 +107,19 @@ function UserSettings() {
         {/* Password */}
         <div className="border-b-2 border-gray-300 pb-2 mb-4 mr-6 flex justify-between items-center">
           <div className="text-lg font-semibold">Password:</div>
-          {editPasswordState ? (
-            <input
-              type="password"
-              value={settingsUserPassword}
-              onChange={(e) => setSettingsUserPassword(e.target.value)}
-              className="border border-black pr-1 pl-1 rounded w-auto max-w-40"
-            />
-          ) : (
-            <div className="border border-black pr-1 pl-1 rounded">
-              {settingsUserPassword}
-            </div>
+            {editPasswordState ? (
+              <input
+                type="text"
+                value={settingsUserPassword}
+                onChange={(e) => setSettingsUserPassword(e.target.value)}
+                className="border border-black pr-1 pl-1 rounded w-auto max-w-40"
+              />
+            ) : (
+              <div className="border border-black pr-1 pl-1 rounded">
+                {"x ".repeat(settingsUserPassword.length)}
+          </div>
           )}
+
 
           {editPasswordState ? (
             <div className="flex items-center">
