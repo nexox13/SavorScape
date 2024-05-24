@@ -21,4 +21,14 @@ router.get('/:country', async (req, res) => {
     }
 });
 
+// Route get all countries
+router.get('/', async (req, res) => {
+    try {
+        const countries = await Country.find({})
+        res.json(countries);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
 module.exports = router;

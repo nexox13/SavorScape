@@ -63,6 +63,7 @@ router.post('/', async (req, res) => {
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   });
+  console.log(recipe)
 
   try {
     const newRecipe = await recipe.save();
