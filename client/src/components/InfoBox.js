@@ -50,7 +50,7 @@ function InfoBox() {
           <svg 
             stroke="currentColor" 
             fill="currentColor" 
-            stroke-width="0" 
+            strokeWidth="0" 
             viewBox="0 0 1024 1024" 
             height="2.3em" 
             width="2.3em" 

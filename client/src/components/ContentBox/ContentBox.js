@@ -9,25 +9,31 @@ function ContentBox() {
   useEffect(() => {
     const fetchRecipes = async () => {
       let url = 'http://10.115.1.14:3001/recipe';
-      
+  
       if (selectedCountry && searchedRecipe) {
-        url += `/search?country=${selectedCountry}&name=${searchedRecipe}`;
+        url += `/search/${selectedCountry}/${searchedRecipe}`;
       } else if (selectedCountry) {
-        url += `/${selectedCountry}`;
+        url += `/country/${selectedCountry}`;
       } else if (searchedRecipe) {
-        url += `/${searchedRecipe}`;
+        url += `/name/${searchedRecipe}`;
       }
-
+  
       try {
         const response = await fetch(url);
         const data = await response.json();
-        setRecipes(data);
+  
+        // Check if data contains recipes array
+        if (data.recipes && Array.isArray(data.recipes)) {
+          setRecipes(data.recipes);
+        } else {
+          console.error('Invalid response format:', data);
+        }
       } catch (error) {
         console.error('Error fetching recipes:', error);
         // Display user-friendly error message here
       }
     };
-
+  
     if (searchSubmit) {
       fetchRecipes();
     }
@@ -40,10 +46,10 @@ function ContentBox() {
           <ContentBoxHeader />
           <div className="grid grid-cols-2 gap-4">
             {recipes.map((recipe) => (
-              <div key={recipe._id} className="recipe-card bg-yellow">
-                {/* Display recipe information here */}
-                <h3>{recipe.title}</h3>
+              <div key={recipe._id} className="recipe-card bg-white mt-8 p-4 rounded-xl">
+                <h3 className="font-bold">{recipe.title}</h3>
                 <p>{recipe.country}</p>
+                <p>{recipe.difficulty}</p>
               </div>
             ))}
           </div>
