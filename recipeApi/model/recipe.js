@@ -16,7 +16,6 @@ const recipeSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    default: 'https://t3.ftcdn.net/jpg/05/97/52/56/360_F_597525620_zgSlP3f0DynQhDdZ26SirWJixlEPL8pn.jpg'
   },
   ingredients: [
     {

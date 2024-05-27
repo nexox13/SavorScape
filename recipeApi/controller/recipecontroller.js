@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../model/recipe');
 
+defaultImage = [
+  'https://t3.ftcdn.net/jpg/05/97/52/56/360_F_597525620_zgSlP3f0DynQhDdZ26SirWJixlEPL8pn.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYwCDM3WxQzEhTJsatZRRpouvaDVusZjBemDPHUsc4nA&s',
+  'https://static.demilked.com/wp-content/uploads/2020/11/5face8b75473e-totally-gourmet-food-weird-side-1-5fabfee4bbe62__700.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqP5iK8mX4VX4XbdB2fmvos2rwUQuDULsVJgbyC1g-7A&s'
+]
+
 router.get('/', async (req, res) => {
   try {
     const recipes = await Recipe.find({})
@@ -60,7 +67,7 @@ router.post('/', async (req, res) => {
     country: req.body.country,
     title: req.body.title,
     difficulty: req.body.difficulty,
-    image: req.body.image,
+    image: req.body.image || defaultImage[Math.floor(Math.random() * defaultImage.length)],
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   });
