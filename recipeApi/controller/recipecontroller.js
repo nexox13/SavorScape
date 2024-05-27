@@ -60,6 +60,7 @@ router.post('/', async (req, res) => {
     country: req.body.country,
     title: req.body.title,
     difficulty: req.body.difficulty,
+    image: req.body.image,
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   });
