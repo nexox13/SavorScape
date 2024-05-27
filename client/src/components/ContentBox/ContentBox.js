@@ -54,7 +54,8 @@ function ContentBox() {
         <div className={`${colorTheme} rounded-lg shadow-md p-4 max-h-[calc(100vh-16vh)] overflow-y-auto`}>
           <ContentBoxHeader />
           {selectedRecipe ? (
-            <div className="recipe-detail bg-white p-4 rounded-xl shadow-sm">
+            <div className="recipe-detail bg-white p-4 rounded-xl shadow-sm mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
               <button onClick={handleBackClick} className="mb-4 px-4 py-2 bg-gray-200 rounded">Back</button>
               <h2 className="font-bold text-2xl">{selectedRecipe.title}</h2>
               <p><strong>Country:</strong> {selectedRecipe.country}</p>
@@ -70,6 +71,10 @@ function ContentBox() {
               <p><strong>Instructions:</strong></p>
               <p>{selectedRecipe.instructions}</p>
             </div>
+            <div className="text-center">
+              <img src={selectedRecipe.image} alt={selectedRecipe.title}/>
+            </div>
+          </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
               {recipes.map((recipe) => (
@@ -80,7 +85,7 @@ function ContentBox() {
                 >
                   <h3 className="font-bold text-lg">{recipe.title}</h3>
                   <p>{recipe.country}</p>
-                  <p>{recipe.difficulty}</p>
+                  <img src={recipe.image} alt={recipe.title} height="300" width="300px" />                
                 </div>
               ))}
             </div>

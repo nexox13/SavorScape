@@ -8,6 +8,7 @@ function AddRecipe() {
 
   const [title, setTitle] = useState('');
   const [country, setCountry] = useState('');
+  const [image, setImage] = useState('');
   const [ingredients, setIngredients] = useState([{ name: '', amount: '', unit: '' }]);
   const [instructions, setInstructions] = useState('');
   const [difficulty, setDifficulty] = useState(0);
@@ -42,7 +43,7 @@ function AddRecipe() {
     try {
       const response = await fetch(`http://10.115.1.14:3001/countries/${country}`);
       if (response.status === 200) {
-        console.log("Country exists in the database")
+        console.log("Country exists in the database");
         return true;
       } else if (response.status === 404) {
         return false;
@@ -79,14 +80,14 @@ function AddRecipe() {
   const resetInput = () => {
     setTitle('');
     setCountry('');
+    setImage('');
     setIngredients([{ name: '', amount: '', unit: '' }]);
     setInstructions('');
     setDifficulty(0);
   };
 
   const addRecipes = async (e) => {
-
-    if (!loggedIn) { // Check if the form can be submitted
+    if (!loggedIn) {
       setSubmitErrorMessage('Form submission is currently disabled, Login to submit a recipe');
       return;
     }
@@ -95,6 +96,7 @@ function AddRecipe() {
     if (!(await validateInputs())) {
       return;
     }
+
     const url = `http://10.115.1.14:3001/recipe/`;
     const recipeData = {
       country,
@@ -102,8 +104,11 @@ function AddRecipe() {
       difficulty,
       ingredients,
       instructions,
-
     };
+
+    if (image.trim()) {
+      recipeData.image = image;
+    }
 
     try {
       const response = await fetch(url, {
@@ -117,6 +122,7 @@ function AddRecipe() {
       if (!response.ok) {
         throw new Error('Failed to add recipe');
       }
+
       if (response.ok) {
         resetInput();
       }
@@ -155,6 +161,17 @@ function AddRecipe() {
           required
         />
         {errors.country && <p className="text-red">{errors.country}</p>}
+
+        <input
+          className={`my-1.5 w-full h-1/4 px-5 ${colorTheme} min-h-10 max-h-96 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-blue-500`}
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          placeholder="Recipe Image URL"
+        />
+
+        {image && (
+          <img src={image} alt="Recipe" className="my-2 max-w-full rounded-lg shadow-md" />
+        )}
 
         <label htmlFor="difficulty" required>
           Difficulty:
@@ -206,7 +223,6 @@ function AddRecipe() {
                 ))}
               </select>
             </div>
-            
           </div>
         ))}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex">
@@ -221,11 +237,11 @@ function AddRecipe() {
               width="1.7em"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M696 480H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"></path>
+              <path d="M696 480H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c-4.4 0-8-3.6-8-8v-48c0-4.4-3.6-8-8-8z"></path>
               <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
             </svg>
           </Icon>
-          {ingredients.length > 1 && ( 
+          {ingredients.length > 1 && (
             <Icon label="remove" onClick={() => removeIngredient(ingredients.length - 1)}>
               <svg
                 className="mt-2"
@@ -243,7 +259,7 @@ function AddRecipe() {
             </Icon>
           )}
         </div>
-        {errors.ingredient && <p className="text-red">{errors.ingredient}</p>}
+        {errors.ingredients && <p className="text-red">{errors.ingredients}</p>}
 
         <label htmlFor="instructions" required>
           Instructions:
