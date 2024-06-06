@@ -4,7 +4,7 @@ import { useAppContext } from '../contexts/AppContext';
 import Icon from './Icon';
 
 function AddRecipe() {
-  const { colorTheme, loggedIn } = useAppContext();
+  const { colorTheme, loggedIn, jsWebToken } = useAppContext();
 
   const [title, setTitle] = useState('');
   const [country, setCountry] = useState('');
@@ -104,11 +104,13 @@ function AddRecipe() {
       difficulty,
       ingredients,
       instructions,
+      jsWebToken,
     };
 
     if (image.trim()) {
       recipeData.image = image;
     }
+    console.log(recipeData);
 
     try {
       const response = await fetch(url, {

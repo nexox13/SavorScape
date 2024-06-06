@@ -26,7 +26,7 @@ function UserSettings() {
   const handleDeleteAccount = async () => {
     console.log('Deleting Account...' , userId);
     try {
-        // Send PUT request to update password
+        // Send DELETE request to update password
         const response = await fetch(`http://10.115.1.14:3001/register/${userId}`, {
             method: 'DELETE',
             headers: {
