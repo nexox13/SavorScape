@@ -1,19 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../contexts/AppContext';
 
 function Loginform() {
   const [showPassword, setShowPassword] = useState(false);
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
+  const [wrongLogin, setWrongLogin] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const delayTime = 15000; // 15 seconds
 
-  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword, setUserId} = useAppContext();
+  const { setLoggedIn, setJsWebToken, setSettingsUsername, setSettingsUserPassword, setUserId } = useAppContext();
 
-  const [wrongLogin, setWrongLogin] = useState(0)
-  // Implement SSED Delay for wrong login
-  
+  useEffect(() => {
+    const delayToken = localStorage.getItem('delayToken');
+    const delayEndTime = localStorage.getItem('delayEndTime');
+    
+    if (delayToken && delayEndTime && Date.now() < parseInt(delayEndTime, 10)) {
+      setIsDisabled(true);
+      const remainingTime = parseInt(delayEndTime, 10) - Date.now();
+      const timer = setTimeout(() => {
+        setIsDisabled(false);
+        localStorage.removeItem('delayToken');
+        localStorage.removeItem('delayEndTime');
+      }, remainingTime);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (wrongLogin >= 5) {
+      setIsDisabled(true);
+      const token = Math.random().toString(36).substr(2); // Generate a random token
+      const delayEndTime = Date.now() + delayTime;
+      localStorage.setItem('delayToken', token);
+      localStorage.setItem('delayEndTime', delayEndTime.toString());
+      
+      const timer = setTimeout(() => {
+        setIsDisabled(false);
+        localStorage.removeItem('delayToken');
+        localStorage.removeItem('delayEndTime');
+        setWrongLogin(0);
+      }, delayTime);
+      return () => clearTimeout(timer);
+    }
+  }, [wrongLogin]);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -21,11 +54,10 @@ function Loginform() {
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
-  
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,12 +86,14 @@ function Loginform() {
           setSettingsUsername(username);
           setSettingsUserPassword(password);
           setUserId(data.userObject._id);
+          setWrongLogin(0);
         } else {
           throw new Error('Login failed');
         }
       } catch (error) {
         console.error('Error logging in:', error);
         setErrorMessage('Wrong User or Password');
+        setWrongLogin(prev => prev + 1);
       }
     }
   };
@@ -72,14 +106,15 @@ function Loginform() {
         </div>
         
         <div className="relative">
-        <input
-          placeholder="Username"
-          type="text"
-          className="p-2 rounded-xl pl-10"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        {errors.username && <p className="text-red">{errors.username}</p>}
+          <input
+            placeholder="Username"
+            type="text"
+            className="p-2 rounded-xl pl-10"
+            value={username}
+            onChange={handleUsernameChange}
+            disabled={isDisabled}
+          />
+          {errors.username && <p className="text-red">{errors.username}</p>}
 
           <svg
             stroke="currentColor"
@@ -97,7 +132,6 @@ function Loginform() {
           </svg>
         </div>
 
-
         <div className="relative">
           <input
             placeholder="Password"
@@ -105,6 +139,7 @@ function Loginform() {
             className="p-2 rounded-xl pl-10 mt-4"
             value={password}
             onChange={handlePasswordChange}
+            disabled={isDisabled}
           />
           {errors.password && <p className="text-red">{errors.password}</p>}
 
@@ -147,8 +182,7 @@ function Loginform() {
         </div>
       </div>
 
-
-      <button onClick = {handleSubmit} className="font-mono text-l bg-red p-1.5 rounded-xl mt-4" type="submit">
+      <button onClick={handleSubmit} className="font-mono text-l bg-red p-1.5 rounded-xl mt-4" type="submit" disabled={isDisabled}>
         Submit
       </button>
     </form>
