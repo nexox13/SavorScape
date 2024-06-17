@@ -1,0 +1,24 @@
+,name,,,estimated_duration,required_duration,
+
+,Content-Box Einbetten,,,8 h,4h
+,API-Countries,,,0.5h,0.5h
+,Komponente: Select,,,1 h,0.5h
+,API-Recipe,,,1h,1h
+,client desing umsetzung,,,8h,4h
+,Search-Country,,,2 h,2 h
+,Clientseitige Input-Validation,,,4 h,4 h
+,Login-Backend SSED,,,2h,2h
+,Login-Front__END-LoginForm,,,4h,4h
+,Client-Design gestaltung,,,3h,3h
+,Settings implementieren,,,4 h,5 h
+,client docker container,,,0.15h,0.15h
+,notepad,,,0.5h,0.15h
+,api docker container,,,0.15h,0.5h
+,Search-Input,,,2 h,2 h
+,fertigstellen der Recipe API,,,8h,11h
+,Mongodb docker container,,,0.25h,0.5h
+,git repo auf labor maschine,,,0.5h,0.25h
+,erstellen der Routen für die Recepte,,,4h,5h
+,erstellen der Routen für User anlegen,,,1h,0.75h
+,erstellen der Routen für den login,,,1h,0.75h
+,Bcrypt Einbindung für Passwort hashing,,,1h,2h
